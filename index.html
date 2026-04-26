@@ -140,54 +140,88 @@ const firebaseConfig = {
 };
 
 const CALENDAR_ID = "99b040e81c4ab4dc0b7404bc57893d74abd98c6694b2ee2fa7f4595362731811@group.calendar.google.com";
-// Google Calendar via REST API using Firebase Google token
-async function getGoogleToken(){
-  const {GoogleAuthProvider} = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
-  const credential = GoogleAuthProvider.credentialFromResult(state._lastCredential);
-  if(credential?.accessToken) return credential.accessToken;
-  return state._googleAccessToken||null;
+// Google Calendar via REST API using Google Identity Services token client
+const GCAL_CLIENT_ID = "341656478236-70ja77ung1a7q5ahhnja4m96a0bsg6mr.apps.googleusercontent.com";
+const GCAL_SCOPES = "https://www.googleapis.com/auth/calendar.events";
+let _tokenClient=null, _calToken=null;
+
+function initTokenClient(){
+  if(_tokenClient) return;
+  if(!window.google?.accounts?.oauth2) return;
+  _tokenClient=google.accounts.oauth2.initTokenClient({
+    client_id:GCAL_CLIENT_ID,
+    scope:GCAL_SCOPES,
+    callback:''
+  });
+}
+
+function getCalToken(){
+  return new Promise((resolve,reject)=>{
+    initTokenClient();
+    if(!_tokenClient){reject(new Error('Token client not ready'));return;}
+    _tokenClient.callback=(resp)=>{
+      if(resp.error){reject(resp);return;}
+      _calToken=resp.access_token;
+      resolve(_calToken);
+    };
+    _tokenClient.requestAccessToken({prompt:_calToken?'':'consent'});
+  });
+}
+
+async function calFetch(url, method, body){
+  let token=_calToken;
+  if(!token) token=await getCalToken();
+  const opts={method,headers:{'Authorization':`Bearer ${token}`}};
+  if(body){opts.headers['Content-Type']='application/json';opts.body=JSON.stringify(body);}
+  const resp=await fetch(url,opts);
+  if(resp.status===401){
+    _calToken=null;
+    token=await getCalToken();
+    opts.headers['Authorization']=`Bearer ${token}`;
+    return fetch(url,opts);
+  }
+  return resp;
 }
 
 async function createCalendarEvent(booking){
-  const token=state._googleAccessToken;
-  if(!token) return null;
-  const room=ROOMS.find(r=>r.id===booking.room);
-  const [y,m,d]=booking.date.split('-').map(Number);
-  const [sh,sm]=booking.startTime.split(':').map(Number);
-  const [eh,em]=booking.endTime.split(':').map(Number);
-  const pad=(n)=>String(n).padStart(2,'0');
-  const toLocal=(yr,mo,dy,hh,mm)=>`${yr}-${pad(mo)}-${pad(dy)}T${pad(hh)}:${pad(mm)}:00`;
-  const event={
-    summary:`${room?.name||booking.room} – ${booking.userName}`,
-    description:`Reserva de ${booking.userName}`,
-    start:{dateTime:toLocal(y,m,d,sh,sm),timeZone:'Europe/Madrid'},
-    end:{dateTime:toLocal(y,m,d,eh,em),timeZone:'Europe/Madrid'}
-  };
-  const resp=await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events`,{
-    method:'POST',
-    headers:{'Authorization':`Bearer ${token}`,'Content-Type':'application/json'},
-    body:JSON.stringify(event)
-  });
-  if(!resp.ok){ console.warn('Calendar create error:',await resp.text()); return null; }
-  const data=await resp.json();
-  return data.id;
+  try {
+    const room=ROOMS.find(r=>r.id===booking.room);
+    const [y,m,d]=booking.date.split('-').map(Number);
+    const [sh,sm]=booking.startTime.split(':').map(Number);
+    const [eh,em]=booking.endTime.split(':').map(Number);
+    const pad=(n)=>String(n).padStart(2,'0');
+    const toLocal=(yr,mo,dy,hh,mm)=>`${yr}-${pad(mo)}-${pad(dy)}T${pad(hh)}:${pad(mm)}:00`;
+    const event={
+      summary:`${room?.name||booking.room} – ${booking.userName}`,
+      description:`Reserva de ${booking.userName}`,
+      start:{dateTime:toLocal(y,m,d,sh,sm),timeZone:'Europe/Madrid'},
+      end:{dateTime:toLocal(y,m,d,eh,em),timeZone:'Europe/Madrid'}
+    };
+    const resp=await calFetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events`,'POST',event);
+    if(!resp.ok){console.warn('Calendar create error:',resp.status);return null;}
+    const data=await resp.json();
+    return data.id;
+  } catch(e){console.warn('createCalendarEvent error:',e);return null;}
 }
 
 async function deleteCalendarEvent(calEventId){
-  const token=state._googleAccessToken;
-  if(!token||!calEventId) return;
-  const resp=await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events/${calEventId}`,{
-    method:'DELETE',
-    headers:{'Authorization':`Bearer ${token}`}
-  });
-  if(!resp.ok&&resp.status!==404&&resp.status!==410) console.warn('Calendar delete error:',resp.status);
+  if(!calEventId) return;
+  try {
+    const resp=await calFetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events/${calEventId}`,'DELETE');
+    if(!resp.ok&&resp.status!==404&&resp.status!==410) console.warn('Calendar delete error:',resp.status);
+  } catch(e){console.warn('deleteCalendarEvent error:',e);}
 }
+
+// Load Google Identity Services script
+const gisScript=document.createElement('script');
+gisScript.src='https://accounts.google.com/gsi/client';
+gisScript.onload=()=>initTokenClient();
+document.head.appendChild(gisScript);
 
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 const provider = new GoogleAuthProvider();
-provider.addScope('https://www.googleapis.com/auth/calendar.events');
 
 const NOMBRE_APP = "Fuengirola Emprende";
 const ROOMS = [
@@ -335,9 +369,7 @@ function bindLogin(){
   document.getElementById('googleLoginBtn').onclick=async()=>{
     try {
       state.loginError='';
-      const result=await signInWithPopup(auth,provider);
-      const credential=GoogleAuthProvider.credentialFromResult(result);
-      if(credential?.accessToken) state._googleAccessToken=credential.accessToken;
+      await signInWithPopup(auth,provider);
     } catch(e){ if(e.code!=='auth/popup-closed-by-user'){ state.loginError='Error al iniciar sesión. Inténtalo de nuevo.'; render(); } }
   };
 }
