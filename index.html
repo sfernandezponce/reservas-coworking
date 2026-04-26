@@ -140,6 +140,32 @@ const firebaseConfig = {
 };
 
 const CALENDAR_ID = "99b040e81c4ab4dc0b7404bc57893d74abd98c6694b2ee2fa7f4595362731811@group.calendar.google.com";
+const GCAL_CLIENT_ID = "341656478236-70ja77ung1a7q5ahhnja4m96a0bsg6mr.apps.googleusercontent.com";
+const GCAL_SCOPES = "https://www.googleapis.com/auth/calendar.events";
+let gapiReady=false, gapiTokenClient=null;
+function loadGapiScripts(){
+  const s1=document.createElement('script'); s1.src='https://apis.google.com/js/api.js';
+  s1.onload=()=>{ gapi.load('client',async()=>{ await gapi.client.init({}); await gapi.client.load('https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'); gapiReady=true; }); };
+  document.head.appendChild(s1);
+  const s2=document.createElement('script'); s2.src='https://accounts.google.com/gsi/client';
+  s2.onload=()=>{ gapiTokenClient=google.accounts.oauth2.initTokenClient({client_id:GCAL_CLIENT_ID,scope:GCAL_SCOPES,prompt:'',callback:''}); };
+  document.head.appendChild(s2);
+}
+async function createCalendarEvent(booking){
+  if(!gapiReady||!gapiTokenClient) return;
+  const room=ROOMS.find(r=>r.id===booking.room);
+  const [y,m,d]=booking.date.split('-').map(Number);
+  const [sh,sm]=booking.startTime.split(':').map(Number);
+  const [eh,em]=booking.endTime.split(':').map(Number);
+  const toISO=(yr,mo,dy,hh,mm)=>new Date(yr,mo-1,dy,hh,mm).toISOString();
+  const event={summary:`${room?.name||booking.room} – ${booking.userName}`,description:`Reserva de ${booking.userName} (${booking.userId})`,start:{dateTime:toISO(y,m,d,sh,sm),timeZone:'Europe/Madrid'},end:{dateTime:toISO(y,m,d,eh,em),timeZone:'Europe/Madrid'}};
+  return new Promise((resolve,reject)=>{
+    gapiTokenClient.callback=async(resp)=>{ if(resp.error){reject(resp);return;} try{await gapi.client.calendar.events.insert({calendarId:CALENDAR_ID,resource:event});resolve();}catch(e){reject(e);} };
+    if(!gapi.client.getToken()) gapiTokenClient.requestAccessToken({prompt:'consent'});
+    else gapiTokenClient.requestAccessToken({prompt:''});
+  });
+}
+loadGapiScripts();
 
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
@@ -443,17 +469,27 @@ function renderAdminPanel(){
 }
 
 function renderGCalPanel(){
-  return `<div><div class="card"><h3>Google Calendar conectado</h3>
-    <p style="font-size:13px;color:#888;margin-bottom:1rem">ID del calendario guardado:</p>
-    <code style="display:block;padding:10px;border-radius:8px;font-size:11px;word-break:break-all">${CALENDAR_ID}</code>
-    <p style="font-size:13px;color:#888;margin-top:1rem;margin-bottom:1.25rem">Para activar la sincronización automática de reservas con Google Calendar sigue estos pasos:</p>
+  return `<div>
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
+      <div style="width:36px;height:36px;background:#edf5f0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">📅</div>
+      <div><h3 style="margin-bottom:2px">Google Calendar conectado</h3><span style="font-size:12px;color:#1a5c3a;font-weight:500">✓ Sincronización activa</span></div>
+    </div>
+    <p style="font-size:13px;color:#888;margin-bottom:1rem;line-height:1.6">Cada vez que se confirme una reserva, se creará automáticamente un evento en el calendario. La primera vez, Google te pedirá permiso.</p>
+    <div style="background:var(--bg2);border-radius:10px;padding:12px 14px;margin-bottom:1rem">
+      <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Formato de los eventos</div>
+      <code style="font-size:12px;background:none;border:none;padding:0;color:#555">[Sala] – Nombre del usuario</code>
+    </div>
+  </div>
+  <div class="card"><h3>¿Cómo funciona?</h3>
     <ol class="gcal-steps">
-      <li><div><strong>Activa la API de Google Calendar</strong><br>Ve a <a href="https://console.cloud.google.com" style="color:var(--accent)">console.cloud.google.com</a> → <em>APIs y servicios → Biblioteca</em>, busca <code>Google Calendar API</code> y actívala en el proyecto <code>reservas-coworking</code>.</div></li>
-      <li><div><strong>Crea credenciales OAuth 2.0</strong><br>Ve a <em>Credenciales → Crear credenciales → ID de cliente OAuth</em>. Elige <em>Aplicación web</em> y añade <code>reservas-coworking.vercel.app</code> como dominio autorizado.</div></li>
-      <li><div><strong>Comparte el calendario con la app</strong><br>En Google Calendar abre <em>Configuración del calendario → Compartir con personas</em> y añade permiso para realizar cambios en eventos.</div></li>
-      <li><div><strong>Activa la sincronización en el código</strong><br>Con las credenciales OAuth listas, añade la librería <code>gapi</code> al código. Cada vez que se confirme una reserva, la app creará automáticamente un evento en el calendario con el formato: <code>[Sala] – Nombre · Fecha y hora</code>.</div></li>
+      <li><div><strong>Confirmas una reserva</strong><br>Seleccionas sala, fecha y hora y haces clic en Confirmar reserva.</div></li>
+      <li><div><strong>Google te pide permiso</strong><br>La primera vez, Google abrirá una ventana pidiéndote acceso al calendario. Solo ocurre una vez por sesión.</div></li>
+      <li><div><strong>El evento se crea automáticamente</strong><br>La reserva aparece en el Google Calendar del coworking con el nombre de la sala, tu nombre, fecha y hora.</div></li>
+      <li><div><strong>Si cancelas una reserva</strong><br>La reserva se elimina de la app. El evento del calendario deberá eliminarse manualmente desde Google Calendar.</div></li>
     </ol>
-  </div></div>`;
+  </div>
+  </div>`;
 }
 
 function bindApp(){
@@ -480,7 +516,9 @@ function bindApp(){
     const clash=checkConflict(f.room,f.date,f.startTime,f.endTime);
     if(clash){ state.conflict=clash; state.bookingSuccess=false; render(); return; }
     try {
-      await addDoc(collection(db,'bookings'),{userId:state.currentUser,userName:state.currentUserName,room:f.room,date:f.date,startTime:f.startTime,endTime:f.endTime,createdAt:new Date().toISOString()});
+      const booking={userId:state.currentUser,userName:state.currentUserName,room:f.room,date:f.date,startTime:f.startTime,endTime:f.endTime,createdAt:new Date().toISOString()};
+      await addDoc(collection(db,'bookings'),booking);
+      try{await createCalendarEvent(booking);}catch(ce){console.warn('Calendario:',ce);}
       state.form={room:'',date:hoyStr(),startTime:'',endTime:''}; state.conflict=null; state.bookingSuccess=true; render();
     } catch(e){ alert('Error al guardar la reserva. Inténtalo de nuevo.'); }
   };
