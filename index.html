@@ -8,52 +8,55 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#f5f4f1;min-height:100vh;color:#1a1a18}
-:root{--accent:#1a5c3a;--accent-light:#edf5f0;--accent-border:#a8d5bc;--danger:#c0392b;--danger-light:#fdf0ee;--success:#1a5c3a;--success-light:#edf5f0;--border:#e2e0da;--bg:#ffffff;--bg2:#f5f4f1;--radius:10px;--radius-lg:14px}
+:root{--accent:#1a5c3a;--accent-light:#edf5f0;--accent-border:#a8d5bc;--danger:#c0392b;--danger-light:#fdf0ee;--success:#1a5c3a;--success-light:#edf5f0;--border:#e2e0da;--bg:#ffffff;--bg2:#f5f4f1}
 .app{max-width:920px;margin:0 auto;padding:2rem 1.25rem}
 .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
 .logo{display:flex;align-items:center;gap:12px}
 .logo-mark{width:38px;height:38px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-mark svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
 .logo-text-main{font-family:'DM Serif Display',serif;font-size:16px;color:#1a1a18;line-height:1.2}
 .logo-text-sub{font-size:11px;color:#888;letter-spacing:.04em;text-transform:uppercase;margin-top:1px}
 .header-right{display:flex;align-items:center;gap:10px}
 .user-pill{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:5px 14px 5px 7px;font-size:13px;color:#555}
-.avatar{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.btn{padding:9px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;font-family:'DM Sans',sans-serif}
+.avatar{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden}
+.avatar img{width:26px;height:26px;border-radius:50%;object-fit:cover}
+.btn{padding:9px 18px;border-radius:10px;font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;font-family:'DM Sans',sans-serif}
 .btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:#154d31}
 .btn-secondary{background:var(--bg);border:1px solid var(--border);color:#333}.btn-secondary:hover{background:var(--bg2)}
+.btn-danger-soft{background:var(--danger-light);color:var(--danger);border:1px solid #f5c6c2}.btn-danger-soft:hover{background:#fce8e6}
+.btn-google{background:#fff;border:1px solid var(--border);color:#333;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;font-size:14px;border-radius:10px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.btn-google:hover{background:#f8f8f8}
 .btn-sm{padding:7px 14px;font-size:12px}
 .btn:disabled{opacity:.4;cursor:not-allowed}
-.tabs{display:flex;gap:3px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;margin-bottom:2rem;width:fit-content;flex-wrap:wrap}
+.tabs{display:flex;gap:3px;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:4px;margin-bottom:2rem;width:fit-content;flex-wrap:wrap}
 .tab{padding:8px 18px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;color:#666;border:none;background:transparent;transition:all .15s;font-family:'DM Sans',sans-serif}
 .tab.active{background:var(--accent);color:#fff}
 .tab:hover:not(.active){color:#1a1a18;background:var(--bg2)}
 .panel{display:none}.panel.active{display:block}
 .section-label{font-size:11px;font-weight:500;color:#999;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem}
 .room-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:2rem}
-.room-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;cursor:pointer;transition:all .15s;position:relative}
+.room-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1.25rem;cursor:pointer;transition:all .15s;position:relative}
 .room-card:hover{border-color:var(--accent-border);background:var(--accent-light)}
 .room-card.selected{border:2px solid var(--accent);background:var(--accent-light)}
 .room-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:18px}
 .room-name{font-size:14px;font-weight:500;color:#1a1a18;margin-bottom:3px}
 .room-desc{font-size:12px;color:#888}
 .room-check{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:50%;background:var(--accent);display:none;align-items:center;justify-content:center}
-.room-check svg{width:11px;height:11px;fill:none;stroke:#fff;stroke-width:2.5}
 .room-card.selected .room-check{display:flex}
-.card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.25rem}
+.card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem}
 .card h3{font-size:14px;font-weight:500;color:#1a1a18;margin-bottom:1rem}
 .form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
 .form-group:last-child{margin-bottom:0}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 label{font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.05em}
-input,select{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;font-size:14px;color:#1a1a18;font-family:'DM Sans',sans-serif;width:100%;outline:none;transition:border-color .15s}
+input,select{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:14px;color:#1a1a18;font-family:'DM Sans',sans-serif;width:100%;outline:none;transition:border-color .15s}
 input:focus,select:focus{border-color:var(--accent);background:#fff}
-.alert{border-radius:var(--radius);padding:12px 14px;font-size:13px;margin-bottom:1rem;display:flex;align-items:flex-start;gap:9px;line-height:1.5}
+.alert{border-radius:10px;padding:12px 14px;font-size:13px;margin-bottom:1rem;display:flex;align-items:flex-start;gap:9px;line-height:1.5}
 .alert.danger{background:var(--danger-light);color:var(--danger);border:1px solid #f5c6c2}
 .alert.success{background:var(--success-light);color:var(--success);border:1px solid var(--accent-border)}
 .alert.info{background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-border)}
+.alert.warn{background:#fffbeb;color:#92400e;border:1px solid #fde68a}
 .alert-icon{flex-shrink:0;font-size:14px;margin-top:1px}
-.cal-wrap{border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:1.25rem}
+.cal-wrap{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.25rem}
 .cal-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg2)}
 .cal-nav-btns{display:flex;align-items:center;gap:10px}
 .cal-nav-btns button{background:var(--bg);border:1px solid var(--border);border-radius:7px;width:28px;height:28px;cursor:pointer;color:#555;font-size:14px;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
@@ -61,13 +64,16 @@ input:focus,select:focus{border-color:var(--accent);background:#fff}
 .cal-month-title{font-size:14px;font-weight:500;color:#1a1a18}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);padding:8px 10px 12px}
 .cal-day-lbl{text-align:center;font-size:11px;color:#aaa;padding:6px 0;font-weight:500}
-.cal-day{text-align:center;padding:6px 4px;font-size:13px;cursor:pointer;border-radius:7px;margin:2px;position:relative;color:#1a1a18;min-height:32px;display:flex;align-items:center;justify-content:center}
-.cal-day:hover:not(.emp):not(.past){background:var(--accent-light)}
+.cal-day{text-align:center;padding:6px 4px;font-size:13px;cursor:pointer;border-radius:7px;margin:2px;position:relative;color:#1a1a18;min-height:32px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px}
+.cal-day:hover:not(.emp):not(.past):not(.closed){background:var(--accent-light)}
 .cal-day.today{font-weight:600;color:var(--accent)}
 .cal-day.sel{background:var(--accent);color:#fff;font-weight:500}
 .cal-day.has-bk::after{content:'';width:4px;height:4px;background:var(--accent);border-radius:50%;position:absolute;bottom:3px;left:50%;transform:translateX(-50%)}
 .cal-day.sel.has-bk::after{background:#fff}
 .cal-day.emp,.cal-day.past{color:#ccc;cursor:default}
+.cal-day.closed{color:#ccc;cursor:not-allowed;background:#fafafa}
+.cal-day.closed .closed-dot{width:4px;height:4px;background:#ddd;border-radius:50%}
+.cal-day.sunday{color:#ddd;cursor:not-allowed}
 .time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .tslot{padding:8px 4px;border:1px solid var(--border);border-radius:8px;font-size:12px;text-align:center;cursor:pointer;background:var(--bg);color:#444;transition:all .15s;font-family:'DM Sans',sans-serif}
 .tslot:hover:not(.taken){border-color:var(--accent);background:var(--accent-light);color:var(--accent)}
@@ -75,7 +81,7 @@ input:focus,select:focus{border-color:var(--accent);background:#fff}
 .tslot.taken{background:var(--bg2);color:#bbb;cursor:not-allowed;text-decoration:line-through}
 .hint{font-size:12px;color:#aaa;margin-top:6px}
 .booking-list{display:flex;flex-direction:column;gap:8px}
-.bk-item{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:13px 16px;display:flex;align-items:center;gap:12px}
+.bk-item{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:13px 16px;display:flex;align-items:center;gap:12px}
 .bk-meta{flex:1;display:flex;flex-direction:column;gap:3px}
 .bk-name{font-size:14px;font-weight:500;color:#1a1a18}
 .bk-detail{font-size:12px;color:#888}
@@ -89,59 +95,205 @@ input:focus,select:focus{border-color:var(--accent);background:#fff}
 .filter-btn{padding:6px 14px;border-radius:999px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:#666;transition:all .15s;font-family:'DM Sans',sans-serif}
 .filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 .empty-state{text-align:center;padding:3rem;color:#aaa;font-size:14px}
-.email-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--bg2);border-radius:8px;font-size:13px;margin-bottom:6px}
-.role-badge{font-size:11px;color:#888;background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:2px 9px}
+.email-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--bg2);border-radius:8px;font-size:13px;margin-bottom:6px;gap:8px;flex-wrap:wrap}
 .remove-btn{color:var(--danger);font-size:12px;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;padding:2px 6px}
 .remove-btn:hover{text-decoration:underline}
+.role-select{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:12px;color:#555;font-family:'DM Sans',sans-serif;cursor:pointer}
 .gcal-steps{list-style:none;counter-reset:s}
 .gcal-steps li{counter-increment:s;display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;color:#666;line-height:1.6}
 .gcal-steps li:last-child{border-bottom:none}
 .gcal-steps li::before{content:counter(s);min-width:22px;height:22px;background:var(--accent-light);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:2px}
 .gcal-steps li strong{color:#1a1a18}
-code{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:12px;color:#333}
-.today-strip{display:flex;flex-direction:column;gap:6px;margin-bottom:1.5rem}
+code{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:12px;color:#333;word-break:break-all}
+.today-strip{display:flex;flex-direction:column;gap:6px}
 .today-item{background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:10px 14px;font-size:13px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent}
 .ti-o1{border-left-color:#7c3aed}.ti-o2{border-left-color:#16a34a}.ti-mt{border-left-color:#d97706}
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;background:#f5f4f1}
 .login-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:2.75rem;width:100%;max-width:420px}
 .login-logo-wrap{display:flex;align-items:center;gap:12px;margin-bottom:2rem}
 .login-logo-mark{width:44px;height:44px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.login-logo-mark svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:2}
-.login-title{font-family:'DM Serif Display',serif;font-size:22px;color:#1a1a18;margin-bottom:.4rem;letter-spacing:-.01em}
+.login-title{font-family:'DM Serif Display',serif;font-size:22px;color:#1a1a18;margin-bottom:.4rem}
 .login-sub{font-size:14px;color:#888;margin-bottom:2rem;line-height:1.5}
 .login-footer{margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border);font-size:12px;color:#aaa;line-height:1.6}
-.admin-role-select{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:12px;color:#555;font-family:'DM Sans',sans-serif;cursor:pointer}
+.role-pill{display:inline-block;font-size:10px;border-radius:999px;padding:1px 8px;border:1px solid;margin-left:6px;font-weight:500}
+.role-admin{background:#edf5f0;color:#1a5c3a;border-color:#a8d5bc}
+.role-coordinador{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}
+.role-miembro{background:#f5f4f1;color:#888;border-color:#e2e0da}
+.holiday-row{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--bg2);border-radius:8px;font-size:13px;margin-bottom:6px}
+.schedule-info{background:var(--accent-light);border:1px solid var(--accent-border);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--accent);margin-bottom:1.25rem;line-height:1.6}
 </style>
 </head>
 <body>
 <div id="app"></div>
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBZnWIp-PlCY_Ui2xcz6FSZp6SoOUofWDw",
+  authDomain: "reservas-coworking.firebaseapp.com",
+  projectId: "reservas-coworking",
+  storageBucket: "reservas-coworking.firebasestorage.app",
+  messagingSenderId: "341656478236",
+  appId: "1:341656478236:web:e73ede57c3e0e2456735d9"
+};
+
+const CALENDAR_ID = "99b040e81c4ab4dc0b7404bc57893d74abd98c6694b2ee2fa7f4595362731811@group.calendar.google.com";
+// Google Calendar via REST API using Firebase Google token
+async function getGoogleToken(){
+  const {GoogleAuthProvider} = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
+  const credential = GoogleAuthProvider.credentialFromResult(state._lastCredential);
+  if(credential?.accessToken) return credential.accessToken;
+  return state._googleAccessToken||null;
+}
+
+async function createCalendarEvent(booking){
+  const token=state._googleAccessToken;
+  if(!token) return null;
+  const room=ROOMS.find(r=>r.id===booking.room);
+  const [y,m,d]=booking.date.split('-').map(Number);
+  const [sh,sm]=booking.startTime.split(':').map(Number);
+  const [eh,em]=booking.endTime.split(':').map(Number);
+  const pad=(n)=>String(n).padStart(2,'0');
+  const toLocal=(yr,mo,dy,hh,mm)=>`${yr}-${pad(mo)}-${pad(dy)}T${pad(hh)}:${pad(mm)}:00`;
+  const event={
+    summary:`${room?.name||booking.room} – ${booking.userName}`,
+    description:`Reserva de ${booking.userName}`,
+    start:{dateTime:toLocal(y,m,d,sh,sm),timeZone:'Europe/Madrid'},
+    end:{dateTime:toLocal(y,m,d,eh,em),timeZone:'Europe/Madrid'}
+  };
+  const resp=await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events`,{
+    method:'POST',
+    headers:{'Authorization':`Bearer ${token}`,'Content-Type':'application/json'},
+    body:JSON.stringify(event)
+  });
+  if(!resp.ok){ console.warn('Calendar create error:',await resp.text()); return null; }
+  const data=await resp.json();
+  return data.id;
+}
+
+async function deleteCalendarEvent(calEventId){
+  const token=state._googleAccessToken;
+  if(!token||!calEventId) return;
+  const resp=await fetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events/${calEventId}`,{
+    method:'DELETE',
+    headers:{'Authorization':`Bearer ${token}`}
+  });
+  if(!resp.ok&&resp.status!==404&&resp.status!==410) console.warn('Calendar delete error:',resp.status);
+}
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
+const provider = new GoogleAuthProvider();
+provider.addScope('https://www.googleapis.com/auth/calendar.events');
+
 const NOMBRE_APP = "Fuengirola Emprende";
 const ROOMS = [
-  {id:'office1', name:'Oficina 1', desc:'Lado izquierdo', icon:'🏢', badge:'b-office1', strip:'ti-o1'},
-  {id:'office2', name:'Oficina 2', desc:'Lado derecho',   icon:'🏗️', badge:'b-office2', strip:'ti-o2'},
-  {id:'meeting', name:'Sala de reuniones', desc:'Espacio compartido', icon:'👥', badge:'b-meeting', strip:'ti-mt'}
+  {id:'office1', name:'Oficina 1',         desc:'Lado izquierdo',    icon:'🏢', badge:'b-office1', strip:'ti-o1'},
+  {id:'office2', name:'Oficina 2',         desc:'Lado derecho',      icon:'🏗️', badge:'b-office2', strip:'ti-o2'},
+  {id:'meeting', name:'Sala de reuniones', desc:'Espacio compartido', icon:'👥', badge:'b-meeting',  strip:'ti-mt'}
 ];
-const HOURS = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
+
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const DIAS  = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
+const ROLES = ['admin','coordinador','miembro'];
+
+// Generate slots for a given hour range, every 30 minutes
+function makeSlots(startH, endH){
+  const s=[];
+  for(let h=startH;h<endH;h++){
+    s.push(`${String(h).padStart(2,'0')}:00`);
+    s.push(`${String(h).padStart(2,'0')}:30`);
+  }
+  s.push(`${String(endH).padStart(2,'0')}:00`);
+  return s;
+}
+
+const SLOTS_WEEKDAY = makeSlots(7, 20); // 07:00–20:00 Mon–Fri
+const SLOTS_SAT     = makeSlots(7, 14); // 07:00–14:00 Sat
 
 function hoyStr(){ return new Date().toISOString().split('T')[0]; }
 function parseD(s){ const[y,m,d]=s.split('-'); return new Date(y,m-1,d); }
 function fmtD(s){ return parseD(s).toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short',year:'numeric'}); }
 function t2m(t){ const[h,m]=t.split(':').map(Number); return h*60+m; }
+function getDow(s){ const d=parseD(s); return (d.getDay()+6)%7; } // 0=Mon,6=Sun
+function isSunday(s){ return getDow(s)===6; }
+function isSaturday(s){ return getDow(s)===5; }
+
+function getSlotsForDate(dateStr){
+  if(isSunday(dateStr)) return [];
+  if(isSaturday(dateStr)) return SLOTS_SAT;
+  return SLOTS_WEEKDAY;
+}
 
 let state = {
-  loggedIn: false, currentUser: null, currentUserName: '', tab: 'reservar',
-  allowedEmails: [
-    {email:'soniafernandezponce@gmail.com', name:'Sonia Fernández', role:'admin'}
-  ],
-  bookings: [],
-  form: {room:'', date:hoyStr(), startTime:'', endTime:''},
+  loggedIn:false, currentUser:null, currentUserName:'', currentUserPhoto:null,
+  tab:'reservar', allowedEmails:[], bookings:[], holidays:[],
+  form:{room:'',date:hoyStr(),startTime:'',endTime:''},
   filter:'all', calYear:new Date().getFullYear(), calMonth:new Date().getMonth(),
-  selectedDate:hoyStr(), conflict:null, bookingSuccess:false, loginError:'',
-  calendarId:'', calIdSaved:false
+  selectedDate:hoyStr(), conflict:null, bookingSuccess:false,
+  loginError:'', loading:true,
+  newHoliday:'', newHolidayLabel:'', holidayMsg:''
 };
+
+// Handle redirect result on page load
+getRedirectResult(auth).then(result=>{
+  if(result){
+    const credential=GoogleAuthProvider.credentialFromResult(result);
+    if(credential?.accessToken) state._googleAccessToken=credential.accessToken;
+  }
+}).catch(e=>console.warn('Redirect result error:',e));
+
+onAuthStateChanged(auth, async(user)=>{
+  if(user){
+    state.authUser=user;
+    await loadData();
+    const found=state.allowedEmails.find(e=>e.email===user.email.toLowerCase());
+    if(!found){
+      state.loginError='Tu cuenta de Google no está en la lista de invitados. Contacta con el administrador.';
+      state.loggedIn=false; state.loading=false;
+      await signOut(auth); render(); return;
+    }
+    state.loggedIn=true;
+    state.currentUser=user.email.toLowerCase();
+    state.currentUserName=found.name||user.displayName||user.email;
+    state.currentUserPhoto=user.photoURL;
+    state.loginError=''; state.loading=false;
+    render(); listenRealtime();
+  } else {
+    state.authUser=null; state.loggedIn=false; state.loading=false; render();
+  }
+});
+
+async function loadData(){
+  try {
+    const [usersSnap, bookingsSnap, holidaysSnap] = await Promise.all([
+      getDocs(collection(db,'users')),
+      getDocs(collection(db,'bookings')),
+      getDocs(collection(db,'holidays'))
+    ]);
+    state.allowedEmails = usersSnap.docs.map(d=>({id:d.id,...d.data()}));
+    state.bookings      = bookingsSnap.docs.map(d=>({id:d.id,...d.data()}));
+    state.holidays      = holidaysSnap.docs.map(d=>({id:d.id,...d.data()}));
+    if(state.allowedEmails.length===0){
+      await setDoc(doc(db,'users','soniafernandezponce@gmail.com'),{
+        email:'soniafernandezponce@gmail.com', name:'Sonia Fernández', role:'admin'
+      });
+      state.allowedEmails=[{id:'soniafernandezponce@gmail.com',email:'soniafernandezponce@gmail.com',name:'Sonia Fernández',role:'admin'}];
+    }
+  } catch(e){ console.error('Error cargando datos:',e); }
+}
+
+function listenRealtime(){
+  onSnapshot(collection(db,'bookings'), snap=>{ state.bookings=snap.docs.map(d=>({id:d.id,...d.data()})); if(state.loggedIn) render(); });
+  onSnapshot(collection(db,'users'),    snap=>{ state.allowedEmails=snap.docs.map(d=>({id:d.id,...d.data()})); if(state.loggedIn) render(); });
+  onSnapshot(collection(db,'holidays'), snap=>{ state.holidays=snap.docs.map(d=>({id:d.id,...d.data()})); if(state.loggedIn) render(); });
+}
+
+function isHoliday(dateStr){ return state.holidays.some(h=>h.date===dateStr); }
+function isClosed(dateStr){ return isSunday(dateStr)||isHoliday(dateStr); }
 
 function checkConflict(room,date,start,end,excludeId=null){
   const s1=t2m(start),e1=t2m(end);
@@ -150,11 +302,22 @@ function checkConflict(room,date,start,end,excludeId=null){
     return s1<t2m(b.endTime)&&e1>t2m(b.startTime);
   });
 }
+
 function getRoomName(id){ return ROOMS.find(r=>r.id===id)?.name||id; }
-function isAdmin(){ return state.allowedEmails.find(e=>e.email===state.currentUser)?.role==='admin'; }
+function getRole(){ return state.allowedEmails.find(e=>e.email===state.currentUser)?.role||'miembro'; }
+function isAdmin(){ return getRole()==='admin'; }
+function canManageUsers(){ return isAdmin()||getRole()==='coordinador'; }
+function canDelete(b){ return b.userId===state.currentUser||isAdmin(); }
+
+function rolePill(role){
+  const map={admin:'role-admin',coordinador:'role-coordinador',miembro:'role-miembro'};
+  const label={admin:'Admin',coordinador:'Coordinador',miembro:'Miembro'};
+  return `<span class="role-pill ${map[role]||'role-miembro'}">${label[role]||role}</span>`;
+}
 
 function render(){
   const app=document.getElementById('app');
+  if(state.loading){ app.innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;color:#888;font-size:14px">Cargando...</div>`; return; }
   if(!state.loggedIn){ app.innerHTML=renderLogin(); bindLogin(); return; }
   app.innerHTML=renderApp(); bindApp();
 }
@@ -162,53 +325,53 @@ function render(){
 function renderLogin(){
   return `<div class="login-wrap"><div class="login-card">
     <div class="login-logo-wrap">
-      <div class="login-logo-mark"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="login-logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
       <div><div style="font-family:'DM Serif Display',serif;font-size:17px;color:#1a1a18;line-height:1.2">${NOMBRE_APP}</div><div style="font-size:11px;color:#aaa;letter-spacing:.04em;text-transform:uppercase;margin-top:2px">Reserva de salas</div></div>
     </div>
     <div class="login-title">Bienvenido</div>
-    <div class="login-sub">Introduce tu correo para acceder al sistema de reservas. Solo usuarios invitados pueden entrar.</div>
+    <div class="login-sub">Accede con tu cuenta de Google. Solo usuarios invitados pueden entrar.</div>
     ${state.loginError?`<div class="alert danger"><span class="alert-icon">⚠</span><span>${state.loginError}</span></div>`:''}
-    <div class="form-group"><label>Correo electrónico</label><input id="lEmail" type="email" placeholder="tu@correo.com"/></div>
-    <div class="form-group" style="margin-bottom:1.25rem"><label>Tu nombre</label><input id="lName" type="text" placeholder="Nombre completo"/></div>
-    <button class="btn btn-primary" style="width:100%;padding:11px" id="loginBtn">Acceder →</button>
-    <div class="login-footer">¿No tienes acceso? Contacta con el administrador del espacio para que te añada a la lista.</div>
+    <button class="btn-google" id="googleLoginBtn">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Continuar con Google
+    </button>
+    <div class="login-footer">¿No tienes acceso? Contacta con el administrador para que añada tu correo de Google a la lista.</div>
   </div></div>`;
 }
 
 function bindLogin(){
-  const go = ()=>{
-    const email=document.getElementById('lEmail').value.trim().toLowerCase();
-    const name=document.getElementById('lName').value.trim();
-    const found=state.allowedEmails.find(e=>e.email===email);
-    if(!found){ state.loginError='Este correo no está en la lista de invitados. Contacta con el administrador.'; render(); return; }
-    state.loggedIn=true; state.currentUser=email; state.currentUserName=name||found.name; state.loginError=''; render();
+  document.getElementById('googleLoginBtn').onclick=async()=>{
+    try {
+      state.loginError='';
+      await signInWithRedirect(auth, provider);
+    } catch(e){ state.loginError='Error al iniciar sesión. Inténtalo de nuevo.'; render(); }
   };
-  document.getElementById('loginBtn').onclick=go;
-  ['lEmail','lName'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')go();}));
 }
 
 function renderApp(){
+  const role=getRole();
   const tabs=[
-    {id:'reservar',  label:'Reservar sala'},
-    {id:'reservas',  label:'Todas las reservas'},
-    ...(isAdmin()?[{id:'admin',label:'Administración'}]:[]),
-    {id:'gcal', label:'Google Calendar'}
+    {id:'reservar',label:'Reservar sala'},
+    {id:'reservas',label:'Todas las reservas'},
+    ...(canManageUsers()?[{id:'admin',label:'Administración'}]:[]),
+    {id:'gcal',label:'Google Calendar'}
   ];
+  const avatarHtml=state.currentUserPhoto?`<img src="${state.currentUserPhoto}" alt=""/>`:state.currentUserName.charAt(0).toUpperCase();
   return `<div class="app">
     <div class="header">
       <div class="logo">
-        <div class="logo-mark"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
         <div><div class="logo-text-main">${NOMBRE_APP}</div><div class="logo-text-sub">Reserva de salas</div></div>
       </div>
       <div class="header-right">
-        <div class="user-pill"><div class="avatar">${state.currentUserName.charAt(0).toUpperCase()}</div>${state.currentUserName}${isAdmin()?'&nbsp;<span style="font-size:10px;background:#edf5f0;color:#1a5c3a;border-radius:999px;padding:1px 7px;border:1px solid #a8d5bc">admin</span>':''}</div>
+        <div class="user-pill"><div class="avatar">${avatarHtml}</div>${state.currentUserName}${rolePill(role)}</div>
         <button class="btn btn-secondary btn-sm" id="logoutBtn">Salir</button>
       </div>
     </div>
     <div class="tabs">${tabs.map(t=>`<button class="tab${state.tab===t.id?' active':''}" data-tab="${t.id}">${t.label}</button>`).join('')}</div>
     <div class="panel${state.tab==='reservar'?' active':''}">${renderBookPanel()}</div>
     <div class="panel${state.tab==='reservas'?' active':''}">${renderBookingsPanel()}</div>
-    ${isAdmin()?`<div class="panel${state.tab==='admin'?' active':''}">${renderAdminPanel()}</div>`:''}
+    ${canManageUsers()?`<div class="panel${state.tab==='admin'?' active':''}">${renderAdminPanel()}</div>`:''}
     <div class="panel${state.tab==='gcal'?' active':''}">${renderGCalPanel()}</div>
   </div>`;
 }
@@ -223,87 +386,49 @@ function renderBookPanel(){
   for(let i=0;i<fd;i++) cells+=`<div class="cal-day emp"></div>`;
   for(let d=1;d<=dim;d++){
     const ds=`${state.calYear}-${String(state.calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const cls=[
-      'cal-day',
-      ds===hoy?'today':'',
-      ds<hoy?'past':'',
-      ds===state.selectedDate?'sel':'',
-      state.bookings.some(b=>b.date===ds)?'has-bk':''
-    ].filter(Boolean).join(' ');
-    cells+=`<div class="${cls}" data-date="${ds}">${d}</div>`;
+    const sun=isSunday(ds), closed=isClosed(ds), past=ds<hoy, hasBk=state.bookings.some(b=>b.date===ds), isSel=ds===state.selectedDate;
+    const cls=['cal-day', ds===hoy?'today':'', past?'past':'', isSel?'sel':'', hasBk&&!closed?'has-bk':'', sun?'sunday':'', closed&&!sun?'closed':''].filter(Boolean).join(' ');
+    const dot=closed&&!sun?'<span class="closed-dot"></span>':'';
+    cells+=`<div class="${cls}" data-date="${ds}" title="${closed&&!sun?'Festivo/Cerrado':sun?'Domingo - cerrado':''}">${d}${dot}</div>`;
   }
 
-  const taken = f.room ? state.bookings.filter(b=>b.room===f.room&&b.date===state.selectedDate).flatMap(b=>{
-    const sl=[]; let c=t2m(b.startTime); while(c<t2m(b.endTime)){sl.push(`${String(Math.floor(c/60)).padStart(2,'0')}:${String(c%60).padStart(2,'0')}`);c+=60;} return sl;
-  }) : [];
+  const slots=getSlotsForDate(state.selectedDate);
+  const taken=f.room?state.bookings.filter(b=>b.room===f.room&&b.date===state.selectedDate).flatMap(b=>{
+    const sl=[]; let c=t2m(b.startTime); while(c<t2m(b.endTime)){sl.push(`${String(Math.floor(c/60)).padStart(2,'0')}:${String(c%60).padStart(2,'0')}`);c+=30;} return sl;
+  }):[];
 
-  const si=HOURS.indexOf(f.startTime);
-  const endOpts=si>=0?HOURS.slice(si+1):[];
+  const si=slots.indexOf(f.startTime);
+  const endOpts=si>=0?slots.slice(si+1):[];
 
   let alertHtml='';
   if(state.conflict) alertHtml=`<div class="alert danger"><span class="alert-icon">⚠</span><span><strong>Conflicto de reserva.</strong> ${getRoomName(f.room)} ya está reservada por <strong>${state.conflict.userName}</strong> de ${state.conflict.startTime} a ${state.conflict.endTime}. Por favor elige otro horario.</span></div>`;
   if(state.bookingSuccess) alertHtml=`<div class="alert success"><span class="alert-icon">✓</span><span><strong>¡Reserva confirmada!</strong> Tu reserva se ha guardado correctamente.</span></div>`;
 
   const todayBks=state.bookings.filter(b=>b.date===hoy).sort((a,b)=>a.startTime.localeCompare(b.startTime));
+  const selectedClosed=isClosed(state.selectedDate);
+  const selectedSun=isSunday(state.selectedDate);
 
   return `
-  ${todayBks.length>0?`<div style="margin-bottom:1.75rem">
-    <div class="section-label">Reservas de hoy</div>
-    <div class="today-strip">${todayBks.map(b=>{
-      const r=ROOMS.find(x=>x.id===b.room);
-      return `<div class="today-item ${r?.strip||''}">
-        <span style="font-size:16px">${r?.icon||'📋'}</span>
-        <span style="font-weight:500">${getRoomName(b.room)}</span>
-        <span style="color:#888">${b.startTime}–${b.endTime}</span>
-        <span style="color:#ccc">·</span>
-        <span style="color:#888">${b.userName}</span>
-      </div>`;
-    }).join('')}</div></div>`:''}
-
+  <div class="schedule-info">📅 <strong>Horario:</strong> Lunes a viernes 07:00–20:00 · Sábados 07:00–14:00 · Domingos y festivos cerrado</div>
+  ${todayBks.length>0?`<div style="margin-bottom:1.75rem"><div class="section-label">Reservas de hoy</div><div class="today-strip">${todayBks.map(b=>{const r=ROOMS.find(x=>x.id===b.room);return`<div class="today-item ${r?.strip||''}"><span style="font-size:16px">${r?.icon||'📋'}</span><span style="font-weight:500">${getRoomName(b.room)}</span><span style="color:#888">${b.startTime}–${b.endTime}</span><span style="color:#ccc">·</span><span style="color:#888">${b.userName}</span></div>`;}).join('')}</div></div>`:''}
   <div class="section-label">Selecciona una sala</div>
-  <div class="room-grid">
-    ${ROOMS.map(r=>`<div class="room-card${f.room===r.id?' selected':''}" data-room="${r.id}">
-      <div class="room-icon" style="background:${r.id==='office1'?'#ede9fe':r.id==='office2'?'#dcfce7':'#fef3c7'}">${r.icon}</div>
-      <div class="room-name">${r.name}</div>
-      <div class="room-desc">${r.desc}</div>
-      <div class="room-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
-    </div>`).join('')}
-  </div>
-
-  <div class="card">
-    <h3>Elige una fecha</h3>
+  <div class="room-grid">${ROOMS.map(r=>`<div class="room-card${f.room===r.id?' selected':''}" data-room="${r.id}"><div class="room-icon" style="background:${r.id==='office1'?'#ede9fe':r.id==='office2'?'#dcfce7':'#fef3c7'}">${r.icon}</div><div class="room-name">${r.name}</div><div class="room-desc">${r.desc}</div><div class="room-check"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div></div>`).join('')}</div>
+  <div class="card"><h3>Elige una fecha</h3>
     <div class="cal-wrap">
-      <div class="cal-head">
-        <div class="cal-nav-btns">
-          <button id="calPrev">‹</button>
-          <span class="cal-month-title">${monthTitle}</span>
-          <button id="calNext">›</button>
-        </div>
-        <span style="font-size:12px;color:#aaa">${fmtD(state.selectedDate)}</span>
-      </div>
-      <div class="cal-grid">
-        ${DIAS.map(d=>`<div class="cal-day-lbl">${d}</div>`).join('')}
-        ${cells}
-      </div>
+      <div class="cal-head"><div class="cal-nav-btns"><button id="calPrev">‹</button><span class="cal-month-title">${monthTitle}</span><button id="calNext">›</button></div><span style="font-size:12px;color:#aaa">${fmtD(state.selectedDate)}</span></div>
+      <div class="cal-grid">${DIAS.map(d=>`<div class="cal-day-lbl">${d}</div>`).join('')}${cells}</div>
     </div>
+    ${selectedClosed?`<div class="alert warn" style="margin-top:0"><span class="alert-icon">🚫</span><span>${selectedSun?'Los domingos el centro está cerrado.':'Este día está marcado como festivo o cerrado.'} Por favor selecciona otra fecha.</span></div>`:''}
   </div>
-
-  <div class="card">
-    <h3>Selecciona el horario</h3>
+  ${!selectedClosed?`<div class="card"><h3>Selecciona el horario</h3>
     ${!f.room?`<p class="hint" style="margin-bottom:.75rem">← Primero elige una sala arriba</p>`:''}
     <div class="section-label" style="margin-bottom:.5rem">Hora de inicio</div>
-    <div class="time-grid" style="margin-bottom:${f.startTime?'1.25rem':'0'}">
-      ${HOURS.map(h=>`<button class="tslot${f.startTime===h?' sel':''}${taken.includes(h)&&f.room?' taken':''}" data-start="${h}">${h}</button>`).join('')}
-    </div>
-    ${f.startTime?`<div class="section-label" style="margin-bottom:.5rem">Hora de fin</div>
-    <div class="time-grid">
-      ${endOpts.map(h=>`<button class="tslot${f.endTime===h?' sel':''}${taken.includes(h)&&f.room?' taken':''}" data-end="${h}">${h}</button>`).join('')}
-    </div>`:''}
-  </div>
-
+    <div class="time-grid" style="margin-bottom:${f.startTime?'1.25rem':'0'}">${slots.slice(0,-1).map(h=>`<button class="tslot${f.startTime===h?' sel':''}${taken.includes(h)&&f.room?' taken':''}" data-start="${h}">${h}</button>`).join('')}</div>
+    ${f.startTime?`<div class="section-label" style="margin-bottom:.5rem">Hora de fin</div><div class="time-grid">${endOpts.map(h=>`<button class="tslot${f.endTime===h?' sel':''}${taken.includes(h)&&f.room?' taken':''}" data-end="${h}">${h}</button>`).join('')}</div>`:''}
+  </div>`:''}
   ${alertHtml}
-  ${f.room&&f.startTime&&f.endTime?`<div class="alert info" style="margin-bottom:1rem"><span class="alert-icon">ℹ</span><span>Vas a reservar <strong>${getRoomName(f.room)}</strong> para <strong>${state.currentUserName}</strong> el <strong>${fmtD(state.selectedDate)}</strong>, de <strong>${f.startTime}</strong> a <strong>${f.endTime}</strong></span></div>`:''}
-  <button class="btn btn-primary" style="width:100%;padding:12px;font-size:14px" id="submitBooking" ${!f.room||!f.startTime||!f.endTime?'disabled':''}>Confirmar reserva</button>`;
+  ${!selectedClosed&&f.room&&f.startTime&&f.endTime?`<div class="alert info" style="margin-bottom:1rem"><span class="alert-icon">ℹ</span><span>Vas a reservar <strong>${getRoomName(f.room)}</strong> para <strong>${state.currentUserName}</strong> el <strong>${fmtD(state.selectedDate)}</strong>, de <strong>${f.startTime}</strong> a <strong>${f.endTime}</strong></span></div>`:''}
+  <button class="btn btn-primary" style="width:100%;padding:12px;font-size:14px" id="submitBooking" ${!f.room||!f.startTime||!f.endTime||selectedClosed?'disabled':''}>Confirmar reserva</button>`;
 }
 
 function renderBookingsPanel(){
@@ -311,11 +436,7 @@ function renderBookingsPanel(){
   let list=[...state.bookings].filter(b=>state.filter==='all'||b.room===state.filter).sort((a,b)=>(a.date+a.startTime).localeCompare(b.date+b.startTime));
   const hoy=hoyStr();
   const up=list.filter(b=>b.date>=hoy), past=list.filter(b=>b.date<hoy);
-
-  return `<div class="filter-bar">
-    ${filters.map(f=>`<button class="filter-btn${state.filter===f.id?' active':''}" data-filter="${f.id}">${f.label}</button>`).join('')}
-    <span style="margin-left:auto;font-size:12px;color:#aaa">${list.length} reserva${list.length!==1?'s':''}</span>
-  </div>
+  return `<div class="filter-bar">${filters.map(f=>`<button class="filter-btn${state.filter===f.id?' active':''}" data-filter="${f.id}">${f.label}</button>`).join('')}<span style="margin-left:auto;font-size:12px;color:#aaa">${list.length} reserva${list.length!==1?'s':''}</span></div>
   ${list.length===0?`<div class="empty-state"><div style="font-size:36px;margin-bottom:12px">📅</div>No hay reservas todavía</div>`:''}
   ${up.length>0?`<div class="section-label">Próximas y hoy</div><div class="booking-list" style="margin-bottom:1.75rem">${up.map(bkItem).join('')}</div>`:''}
   ${past.length>0?`<div class="section-label">Pasadas</div><div class="booking-list" style="opacity:.6">${past.map(bkItem).join('')}</div>`:''}`;
@@ -323,134 +444,173 @@ function renderBookingsPanel(){
 
 function bkItem(b){
   const r=ROOMS.find(x=>x.id===b.room);
-  const canDel=b.userId===state.currentUser||isAdmin();
-  return `<div class="bk-item">
-    <span style="font-size:20px">${r?.icon||'📋'}</span>
-    <div class="bk-meta">
-      <div class="bk-name">${b.userName}</div>
-      <div class="bk-detail">${fmtD(b.date)} &nbsp;·&nbsp; ${b.startTime}–${b.endTime}</div>
-    </div>
+  const mine=b.userId===state.currentUser;
+  return `<div class="bk-item"><span style="font-size:20px">${r?.icon||'📋'}</span>
+    <div class="bk-meta"><div class="bk-name">${b.userName}${mine?'<span style="font-size:11px;color:#888;font-weight:400;margin-left:6px">(tú)</span>':''}</div><div class="bk-detail">${fmtD(b.date)} &nbsp;·&nbsp; ${b.startTime}–${b.endTime}</div></div>
     <span class="badge ${r?.badge||''}">${r?.name||b.room}</span>
-    ${canDel?`<button class="del-btn" data-del="${b.id}" title="Cancelar reserva">✕</button>`:''}
+    ${canDelete(b)?`<button class="del-btn" data-del="${b.id}" title="Cancelar reserva">✕</button>`:''}
   </div>`;
 }
 
 function renderAdminPanel(){
+  const sortedHolidays=[...state.holidays].sort((a,b)=>a.date.localeCompare(b.date));
   return `<div>
-  <div class="card">
-    <h3>Miembros invitados</h3>
-    <p style="font-size:13px;color:#888;margin-bottom:1rem">Aquí puedes añadir o eliminar personas. Cualquier miembro puede ser administrador — los administradores pueden gestionar reservas y usuarios.</p>
-    <div id="emailList">
-      ${state.allowedEmails.map(e=>`<div class="email-row">
-        <div><span style="color:#1a1a18">${e.name}</span> <span style="color:#aaa;font-size:12px">${e.email}</span></div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <select class="admin-role-select" data-role-email="${e.email}">
-            <option value="miembro"${e.role==='miembro'?' selected':''}>Miembro</option>
-            <option value="admin"${e.role==='admin'?' selected':''}>Admin</option>
-          </select>
-          ${e.email!==state.currentUser?`<button class="remove-btn" data-remove="${e.email}">Eliminar</button>`:'<span style="font-size:11px;color:#aaa">(tú)</span>'}
-        </div>
-      </div>`).join('')}
-    </div>
+  <div class="card"><h3>Miembros invitados</h3>
+    <p style="font-size:13px;color:#888;margin-bottom:1rem">${isAdmin()?'Puedes añadir, eliminar y cambiar roles.':'Como coordinador puedes añadir nuevos miembros a la lista.'}</p>
+    ${!isAdmin()?`<div class="alert warn" style="margin-bottom:1rem"><span class="alert-icon">ℹ</span><span>Solo los administradores pueden eliminar usuarios o cambiar roles.</span></div>`:''}
+    <div>${state.allowedEmails.map(e=>`<div class="email-row">
+      <div style="min-width:0"><span style="color:#1a1a18">${e.name}</span>${rolePill(e.role)}<span style="color:#aaa;font-size:12px;display:block;margin-top:2px">${e.email}</span></div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+        ${isAdmin()&&e.email!==state.currentUser?`<select class="role-select" data-role-email="${e.email}">${ROLES.map(r=>`<option value="${r}"${e.role===r?' selected':''}>${{admin:'Admin',coordinador:'Coordinador',miembro:'Miembro'}[r]}</option>`).join('')}</select>`:''}
+        ${isAdmin()&&e.email!==state.currentUser?`<button class="remove-btn" data-remove="${e.email}">Eliminar</button>`:''}
+        ${e.email===state.currentUser?'<span style="font-size:11px;color:#aaa">(tú)</span>':''}
+      </div>
+    </div>`).join('')}</div>
     <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border)">
       <div class="section-label" style="margin-bottom:.75rem">Añadir nuevo miembro</div>
       <div class="form-row" style="margin-bottom:10px">
-        <div class="form-group" style="margin-bottom:0"><label>Correo electrónico</label><input id="nEmail" type="email" placeholder="nuevo@correo.com"/></div>
+        <div class="form-group" style="margin-bottom:0"><label>Correo de Google</label><input id="nEmail" type="email" placeholder="nuevo@gmail.com"/></div>
         <div class="form-group" style="margin-bottom:0"><label>Nombre completo</label><input id="nName" type="text" placeholder="Nombre y apellidos"/></div>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
-        <select id="nRole" class="admin-role-select" style="padding:8px 12px;font-size:13px">
-          <option value="miembro">Miembro</option>
-          <option value="admin">Admin</option>
-        </select>
+        ${isAdmin()?`<select id="nRole" class="role-select" style="padding:8px 12px;font-size:13px">${ROLES.map(r=>`<option value="${r}">${{admin:'Admin',coordinador:'Coordinador',miembro:'Miembro'}[r]}</option>`).join('')}</select>`:`<input type="hidden" id="nRole" value="miembro"/>`}
         <button class="btn btn-primary btn-sm" id="addMember">Añadir</button>
       </div>
+      <div id="addMsg" style="margin-top:.75rem;font-size:13px"></div>
     </div>
   </div>
 
-  <div class="card">
-    <h3>Gestión de reservas</h3>
-    ${state.bookings.length===0?'<p style="font-size:13px;color:#aaa">No hay reservas todavía.</p>':
-    `<div class="booking-list">${[...state.bookings].sort((a,b)=>(a.date+a.startTime).localeCompare(b.date+b.startTime)).map(bkItem).join('')}</div>`}
-  </div></div>`;
+  ${isAdmin()?`<div class="card"><h3>Días festivos y cierres</h3>
+    <p style="font-size:13px;color:#888;margin-bottom:1rem">Marca los días que el centro estará cerrado por festivo u otros motivos. Aparecerán bloqueados en el calendario para todos los usuarios.</p>
+    ${sortedHolidays.length>0?`<div style="margin-bottom:1rem">${sortedHolidays.map(h=>`<div class="holiday-row"><span style="color:#1a1a18">${fmtD(h.date)} ${h.label?`<span style="color:#aaa;font-size:12px">· ${h.label}</span>`:''}</span><button class="remove-btn" data-remove-holiday="${h.id}">Eliminar</button></div>`).join('')}</div>`:`<p style="font-size:13px;color:#aaa;margin-bottom:1rem">No hay días marcados todavía.</p>`}
+    <div class="form-row" style="margin-bottom:10px">
+      <div class="form-group" style="margin-bottom:0"><label>Fecha</label><input id="hDate" type="date" min="${hoyStr()}"/></div>
+      <div class="form-group" style="margin-bottom:0"><label>Motivo (opcional)</label><input id="hLabel" type="text" placeholder="Ej: Feria de Málaga"/></div>
+    </div>
+    <button class="btn btn-primary btn-sm" id="addHoliday">Marcar como cerrado</button>
+    <div id="holidayMsg" style="margin-top:.75rem;font-size:13px"></div>
+  </div>`:''}
+
+  ${isAdmin()?`<div class="card"><h3>Gestión de reservas</h3>${state.bookings.length===0?'<p style="font-size:13px;color:#aaa">No hay reservas todavía.</p>':`<div class="booking-list">${[...state.bookings].sort((a,b)=>(a.date+a.startTime).localeCompare(b.date+b.startTime)).map(bkItem).join('')}</div>`}</div>`:''}
+  </div>`;
 }
 
 function renderGCalPanel(){
   return `<div>
   <div class="card">
-    <h3>Cómo conectar Google Calendar</h3>
-    <p style="font-size:13px;color:#888;margin-bottom:1.25rem">Sigue estos pasos para que las reservas aparezcan automáticamente en el calendario de Google del espacio.</p>
-    <ol class="gcal-steps">
-      <li><div><strong>Crea un proyecto en Google Cloud</strong><br>Ve a <a href="https://console.cloud.google.com" style="color:var(--accent)">console.cloud.google.com</a>, haz clic en "Nuevo proyecto" y llámalo <code>ReservasFuengirola</code>.</div></li>
-      <li><div><strong>Activa la API de Google Calendar</strong><br>Dentro del proyecto ve a <em>APIs y servicios → Biblioteca</em>, busca <code>Google Calendar API</code> y haz clic en Activar.</div></li>
-      <li><div><strong>Crea credenciales OAuth 2.0</strong><br>Ve a <em>Credenciales → Crear credenciales → ID de cliente OAuth</em>. Elige <em>Aplicación web</em> y añade tu dominio de Vercel (p.ej. <code>reservas-fuengirola.vercel.app</code>).</div></li>
-      <li><div><strong>Comparte tu calendario con la app</strong><br>En Google Calendar abre la <em>Configuración del calendario → Compartir con personas</em> y añade el correo de la cuenta de servicio con permiso para <em>Realizar cambios en eventos</em>.</div></li>
-      <li><div><strong>Copia el ID del calendario</strong><br>En la misma configuración encontrarás el <em>ID del calendario</em>, con este aspecto: <code>abc123@group.calendar.google.com</code>. Cópialo.</div></li>
-      <li><div><strong>Pégalo aquí abajo</strong><br>Introduce el ID en el campo de abajo y guárdalo. Luego pídele al desarrollador que conecte la librería <code>gapi</code> en el código para que las reservas se sincronicen.</div></li>
-      <li><div><strong>Formato de los eventos</strong><br>Cada reserva creará un evento con el título <code>[Sala] – Nombre del usuario</code>, en la fecha y hora exactas, con el correo del usuario como asistente.</div></li>
-    </ol>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem">
+      <div style="width:36px;height:36px;background:#edf5f0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px">📅</div>
+      <div><h3 style="margin-bottom:2px">Google Calendar conectado</h3><span style="font-size:12px;color:#1a5c3a;font-weight:500">✓ Sincronización activa en ambas direcciones</span></div>
+    </div>
+    <p style="font-size:13px;color:#888;margin-bottom:1rem;line-height:1.6">Las reservas se sincronizan automáticamente con Google Calendar. Cuando confirmes o canceles una reserva en la app, el evento se crea o borra también en el calendario.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem">
+      <div style="background:var(--accent-light);border:1px solid var(--accent-border);border-radius:10px;padding:12px">
+        <div style="font-size:12px;font-weight:500;color:var(--accent);margin-bottom:4px">✓ Al confirmar reserva</div>
+        <div style="font-size:12px;color:#555">Se crea el evento en Google Calendar automáticamente</div>
+      </div>
+      <div style="background:var(--accent-light);border:1px solid var(--accent-border);border-radius:10px;padding:12px">
+        <div style="font-size:12px;font-weight:500;color:var(--accent);margin-bottom:4px">✓ Al cancelar reserva</div>
+        <div style="font-size:12px;color:#555">Se borra el evento de Google Calendar automáticamente</div>
+      </div>
+    </div>
+    <div style="background:var(--bg2);border-radius:10px;padding:12px 14px">
+      <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Formato de los eventos</div>
+      <code style="font-size:12px;background:none;border:none;padding:0;color:#555">[Sala] – Nombre del usuario</code>
+    </div>
   </div>
-  <div class="card">
-    <h3>ID de tu Google Calendar</h3>
-    <p style="font-size:13px;color:#888;margin-bottom:1rem">Una vez tengas el ID, pégalo aquí para tenerlo guardado y listo para la integración.</p>
-    <div class="form-group"><label>ID del calendario</label><input id="calIdInput" type="text" placeholder="tu-calendario@group.calendar.google.com" value="${state.calendarId}"/></div>
-    <button class="btn btn-primary btn-sm" id="saveCalId">Guardar</button>
-    ${state.calIdSaved?`<div class="alert success" style="margin-top:1rem"><span class="alert-icon">✓</span><span>ID guardado. Cuando conectes la API de Google, las reservas se sincronizarán automáticamente.</span></div>`:''}
-  </div></div>`;
+  <div class="card"><h3>Nota sobre permisos</h3>
+    <p style="font-size:13px;color:#888;line-height:1.6">La primera vez que cada usuario confirme una reserva, Google le pedirá permiso para acceder al calendario. Es un aviso estándar de Google para apps no verificadas — es seguro aceptarlo ya que es vuestra propia herramienta interna.</p>
+  </div>
+  </div>`;
 }
 
 function bindApp(){
-  document.getElementById('logoutBtn').onclick=()=>{ state.loggedIn=false; state.currentUser=null; render(); };
+  document.getElementById('logoutBtn').onclick=async()=>{ await signOut(auth); state.loggedIn=false; state.currentUser=null; state.currentUserPhoto=null; state.form={room:'',date:hoyStr(),startTime:'',endTime:''}; render(); };
   document.querySelectorAll('[data-tab]').forEach(t=>t.onclick=()=>{ state.tab=t.dataset.tab; state.conflict=null; state.bookingSuccess=false; render(); });
   document.querySelectorAll('[data-room]').forEach(r=>r.onclick=()=>{ state.form.room=r.dataset.room; state.form.startTime=''; state.form.endTime=''; state.conflict=null; state.bookingSuccess=false; render(); });
-  document.querySelectorAll('.cal-day:not(.emp):not(.past)').forEach(d=>d.onclick=()=>{
+
+  document.querySelectorAll('.cal-day:not(.emp):not(.past):not(.closed):not(.sunday)').forEach(d=>d.onclick=()=>{
     if(!d.dataset.date) return;
     state.selectedDate=d.dataset.date; state.form.date=d.dataset.date; state.form.startTime=''; state.form.endTime=''; state.conflict=null; state.bookingSuccess=false; render();
   });
+
   const cp=document.getElementById('calPrev'), cn=document.getElementById('calNext');
   if(cp) cp.onclick=()=>{ state.calMonth--; if(state.calMonth<0){state.calMonth=11;state.calYear--;} render(); };
   if(cn) cn.onclick=()=>{ state.calMonth++; if(state.calMonth>11){state.calMonth=0;state.calYear++;} render(); };
+
   document.querySelectorAll('[data-start]').forEach(s=>s.onclick=()=>{ if(s.classList.contains('taken')) return; state.form.startTime=s.dataset.start; state.form.endTime=''; state.conflict=null; state.bookingSuccess=false; render(); });
   document.querySelectorAll('[data-end]').forEach(s=>s.onclick=()=>{ if(s.classList.contains('taken')) return; state.form.endTime=s.dataset.end; state.conflict=null; state.bookingSuccess=false; render(); });
 
   const sub=document.getElementById('submitBooking');
-  if(sub) sub.onclick=()=>{
+  if(sub) sub.onclick=async()=>{
     const f=state.form;
+    if(isClosed(f.date)){ alert('Este día está cerrado.'); return; }
     const clash=checkConflict(f.room,f.date,f.startTime,f.endTime);
     if(clash){ state.conflict=clash; state.bookingSuccess=false; render(); return; }
-    state.bookings.push({id:Date.now(), userId:state.currentUser, userName:state.currentUserName, room:f.room, date:f.date, startTime:f.startTime, endTime:f.endTime});
-    state.form={room:'',date:hoyStr(),startTime:'',endTime:''}; state.conflict=null; state.bookingSuccess=true; render();
+    try {
+      const booking={userId:state.currentUser,userName:state.currentUserName,room:f.room,date:f.date,startTime:f.startTime,endTime:f.endTime,createdAt:new Date().toISOString()};
+      const docRef=await addDoc(collection(db,'bookings'),booking);
+      try{
+        const calEventId=await createCalendarEvent(booking);
+        if(calEventId) await setDoc(doc(db,'bookings',docRef.id),{calEventId},{merge:true});
+      }catch(ce){console.warn('Calendario:',ce);}
+      state.form={room:'',date:hoyStr(),startTime:'',endTime:''}; state.conflict=null; state.bookingSuccess=true; render();
+    } catch(e){ alert('Error al guardar la reserva. Inténtalo de nuevo.'); }
   };
 
   document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{ state.filter=b.dataset.filter; render(); });
-  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
-    if(confirm('¿Cancelar esta reserva?')){ state.bookings=state.bookings.filter(bk=>bk.id!=b.dataset.del); render(); }
+
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{
+    const bk=state.bookings.find(x=>x.id===b.dataset.del);
+    if(!bk||!canDelete(bk)){ alert('Solo puedes cancelar tus propias reservas.'); return; }
+    if(confirm('¿Cancelar esta reserva?')){ try { await deleteDoc(doc(db,'bookings',b.dataset.del)); } catch(e){ alert('Error al cancelar.'); } }
   });
 
-  document.querySelectorAll('[data-role-email]').forEach(sel=>sel.onchange=()=>{
-    const entry=state.allowedEmails.find(e=>e.email===sel.dataset.roleEmail);
-    if(entry) entry.role=sel.value; render();
+  document.querySelectorAll('[data-role-email]').forEach(sel=>sel.onchange=async()=>{
+    if(!isAdmin()){ alert('Solo los administradores pueden cambiar roles.'); return; }
+    try { await setDoc(doc(db,'users',sel.dataset.roleEmail),{role:sel.value},{merge:true}); } catch(e){ alert('Error al cambiar el rol.'); }
   });
 
   const addM=document.getElementById('addMember');
-  if(addM) addM.onclick=()=>{
+  if(addM) addM.onclick=async()=>{
     const email=document.getElementById('nEmail')?.value.trim().toLowerCase();
     const name=document.getElementById('nName')?.value.trim();
     const role=document.getElementById('nRole')?.value||'miembro';
-    if(!email||!name){ alert('Por favor rellena el correo y el nombre.'); return; }
-    if(state.allowedEmails.find(x=>x.email===email)){ alert('Este correo ya está en la lista.'); return; }
-    state.allowedEmails.push({email,name,role}); render();
+    const msg=document.getElementById('addMsg');
+    if(!email||!name){ if(msg){msg.style.color='#c0392b';msg.textContent='Por favor rellena el correo y el nombre.';} return; }
+    if(state.allowedEmails.find(x=>x.email===email)){ if(msg){msg.style.color='#c0392b';msg.textContent='Este correo ya está en la lista.';} return; }
+    try {
+      await setDoc(doc(db,'users',email),{email,name,role});
+      document.getElementById('nEmail').value=''; document.getElementById('nName').value='';
+      if(msg){msg.style.color='#1a5c3a';msg.textContent=`✓ ${name} añadido correctamente.`;}
+      setTimeout(()=>{ if(msg) msg.textContent=''; },3000);
+    } catch(e){ if(msg){msg.style.color='#c0392b';msg.textContent='Error al añadir el miembro.';} }
   };
 
-  document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{
-    if(confirm(`¿Eliminar a ${b.dataset.remove} de la lista de invitados?`)){ state.allowedEmails=state.allowedEmails.filter(e=>e.email!==b.dataset.remove); render(); }
+  document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=async()=>{
+    if(!isAdmin()){ alert('Solo los administradores pueden eliminar miembros.'); return; }
+    if(confirm(`¿Eliminar a ${b.dataset.remove} de la lista?`)){ try { await deleteDoc(doc(db,'users',b.dataset.remove)); } catch(e){ alert('Error al eliminar.'); } }
   });
 
-  const sc=document.getElementById('saveCalId');
-  if(sc) sc.onclick=()=>{ state.calendarId=document.getElementById('calIdInput').value; state.calIdSaved=true; render(); };
-}
+  const addH=document.getElementById('addHoliday');
+  if(addH) addH.onclick=async()=>{
+    const date=document.getElementById('hDate')?.value;
+    const label=document.getElementById('hLabel')?.value.trim();
+    const msg=document.getElementById('holidayMsg');
+    if(!date){ if(msg){msg.style.color='#c0392b';msg.textContent='Por favor selecciona una fecha.';} return; }
+    if(state.holidays.find(h=>h.date===date)){ if(msg){msg.style.color='#c0392b';msg.textContent='Este día ya está marcado.';} return; }
+    try {
+      await addDoc(collection(db,'holidays'),{date,label:label||''});
+      document.getElementById('hDate').value=''; document.getElementById('hLabel').value='';
+      if(msg){msg.style.color='#1a5c3a';msg.textContent='✓ Día marcado como cerrado.';}
+      setTimeout(()=>{ if(msg) msg.textContent=''; },3000);
+    } catch(e){ if(msg){msg.style.color='#c0392b';msg.textContent='Error al guardar.';} }
+  };
 
-render();
+  document.querySelectorAll('[data-remove-holiday]').forEach(b=>b.onclick=async()=>{
+    if(confirm('¿Eliminar este día festivo?')){ try { await deleteDoc(doc(db,'holidays',b.dataset.removeHoliday)); } catch(e){ alert('Error al eliminar.'); } }
+  });
+}
 </script>
 </body>
 </html>
