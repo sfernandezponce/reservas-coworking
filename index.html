@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fuengirola Emprende – Reserva de Salas</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f5f4f1;min-height:100vh;color:#1a1a18}
+:root{--accent:#1a5c3a;--accent-light:#edf5f0;--accent-border:#a8d5bc;--danger:#c0392b;--danger-light:#fdf0ee;--success:#1a5c3a;--success-light:#edf5f0;--border:#e2e0da;--bg:#ffffff;--bg2:#f5f4f1;--radius:10px;--radius-lg:14px}
+.app{max-width:920px;margin:0 auto;padding:2rem 1.25rem}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:38px;height:38px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
+.logo-text-main{font-family:'DM Serif Display',serif;font-size:16px;color:#1a1a18;line-height:1.2}
+.logo-text-sub{font-size:11px;color:#888;letter-spacing:.04em;text-transform:uppercase;margin-top:1px}
+.header-right{display:flex;align-items:center;gap:10px}
+.user-pill{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:5px 14px 5px 7px;font-size:13px;color:#555}
+.avatar{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.btn{padding:9px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;font-family:'DM Sans',sans-serif}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:#154d31}
+.btn-secondary{background:var(--bg);border:1px solid var(--border);color:#333}.btn-secondary:hover{background:var(--bg2)}
+.btn-sm{padding:7px 14px;font-size:12px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.tabs{display:flex;gap:3px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;margin-bottom:2rem;width:fit-content;flex-wrap:wrap}
+.tab{padding:8px 18px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;color:#666;border:none;background:transparent;transition:all .15s;font-family:'DM Sans',sans-serif}
+.tab.active{background:var(--accent);color:#fff}
+.tab:hover:not(.active){color:#1a1a18;background:var(--bg2)}
+.panel{display:none}.panel.active{display:block}
+.section-label{font-size:11px;font-weight:500;color:#999;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem}
+.room-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:2rem}
+.room-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;cursor:pointer;transition:all .15s;position:relative}
+.room-card:hover{border-color:var(--accent-border);background:var(--accent-light)}
+.room-card.selected{border:2px solid var(--accent);background:var(--accent-light)}
+.room-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:18px}
+.room-name{font-size:14px;font-weight:500;color:#1a1a18;margin-bottom:3px}
+.room-desc{font-size:12px;color:#888}
+.room-check{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:50%;background:var(--accent);display:none;align-items:center;justify-content:center}
+.room-check svg{width:11px;height:11px;fill:none;stroke:#fff;stroke-width:2.5}
+.room-card.selected .room-check{display:flex}
+.card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.25rem}
+.card h3{font-size:14px;font-weight:500;color:#1a1a18;margin-bottom:1rem}
+.form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.form-group:last-child{margin-bottom:0}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.05em}
+input,select{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;font-size:14px;color:#1a1a18;font-family:'DM Sans',sans-serif;width:100%;outline:none;transition:border-color .15s}
+input:focus,select:focus{border-color:var(--accent);background:#fff}
+.alert{border-radius:var(--radius);padding:12px 14px;font-size:13px;margin-bottom:1rem;display:flex;align-items:flex-start;gap:9px;line-height:1.5}
+.alert.danger{background:var(--danger-light);color:var(--danger);border:1px solid #f5c6c2}
+.alert.success{background:var(--success-light);color:var(--success);border:1px solid var(--accent-border)}
+.alert.info{background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-border)}
+.alert-icon{flex-shrink:0;font-size:14px;margin-top:1px}
+.cal-wrap{border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:1.25rem}
+.cal-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg2)}
+.cal-nav-btns{display:flex;align-items:center;gap:10px}
+.cal-nav-btns button{background:var(--bg);border:1px solid var(--border);border-radius:7px;width:28px;height:28px;cursor:pointer;color:#555;font-size:14px;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+.cal-nav-btns button:hover{background:var(--accent-light);border-color:var(--accent-border)}
+.cal-month-title{font-size:14px;font-weight:500;color:#1a1a18}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);padding:8px 10px 12px}
+.cal-day-lbl{text-align:center;font-size:11px;color:#aaa;padding:6px 0;font-weight:500}
+.cal-day{text-align:center;padding:6px 4px;font-size:13px;cursor:pointer;border-radius:7px;margin:2px;position:relative;color:#1a1a18;min-height:32px;display:flex;align-items:center;justify-content:center}
+.cal-day:hover:not(.emp):not(.past){background:var(--accent-light)}
+.cal-day.today{font-weight:600;color:var(--accent)}
+.cal-day.sel{background:var(--accent);color:#fff;font-weight:500}
+.cal-day.has-bk::after{content:'';width:4px;height:4px;background:var(--accent);border-radius:50%;position:absolute;bottom:3px;left:50%;transform:translateX(-50%)}
+.cal-day.sel.has-bk::after{background:#fff}
+.cal-day.emp,.cal-day.past{color:#ccc;cursor:default}
+.time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.tslot{padding:8px 4px;border:1px solid var(--border);border-radius:8px;font-size:12px;text-align:center;cursor:pointer;background:var(--bg);color:#444;transition:all .15s;font-family:'DM Sans',sans-serif}
+.tslot:hover:not(.taken){border-color:var(--accent);background:var(--accent-light);color:var(--accent)}
+.tslot.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tslot.taken{background:var(--bg2);color:#bbb;cursor:not-allowed;text-decoration:line-through}
+.hint{font-size:12px;color:#aaa;margin-top:6px}
+.booking-list{display:flex;flex-direction:column;gap:8px}
+.bk-item{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:13px 16px;display:flex;align-items:center;gap:12px}
+.bk-meta{flex:1;display:flex;flex-direction:column;gap:3px}
+.bk-name{font-size:14px;font-weight:500;color:#1a1a18}
+.bk-detail{font-size:12px;color:#888}
+.badge{padding:4px 11px;border-radius:999px;font-size:11px;font-weight:500;white-space:nowrap;flex-shrink:0}
+.b-office1{background:#ede9fe;color:#5b21b6}
+.b-office2{background:#dcfce7;color:#15803d}
+.b-meeting{background:#fef3c7;color:#92400e}
+.del-btn{background:none;border:none;cursor:pointer;color:#ccc;font-size:15px;padding:4px 6px;transition:color .15s}
+.del-btn:hover{color:var(--danger)}
+.filter-bar{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center}
+.filter-btn{padding:6px 14px;border-radius:999px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--bg);color:#666;transition:all .15s;font-family:'DM Sans',sans-serif}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.empty-state{text-align:center;padding:3rem;color:#aaa;font-size:14px}
+.email-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--bg2);border-radius:8px;font-size:13px;margin-bottom:6px}
+.role-badge{font-size:11px;color:#888;background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:2px 9px}
+.remove-btn{color:var(--danger);font-size:12px;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;padding:2px 6px}
+.remove-btn:hover{text-decoration:underline}
+.gcal-steps{list-style:none;counter-reset:s}
+.gcal-steps li{counter-increment:s;display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;color:#666;line-height:1.6}
+.gcal-steps li:last-child{border-bottom:none}
+.gcal-steps li::before{content:counter(s);min-width:22px;height:22px;background:var(--accent-light);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:2px}
+.gcal-steps li strong{color:#1a1a18}
+code{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:12px;color:#333}
+.today-strip{display:flex;flex-direction:column;gap:6px;margin-bottom:1.5rem}
+.today-item{background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:10px 14px;font-size:13px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent}
+.ti-o1{border-left-color:#7c3aed}.ti-o2{border-left-color:#16a34a}.ti-mt{border-left-color:#d97706}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;background:#f5f4f1}
+.login-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:2.75rem;width:100%;max-width:420px}
+.login-logo-wrap{display:flex;align-items:center;gap:12px;margin-bottom:2rem}
+.login-logo-mark{width:44px;height:44px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.login-logo-mark svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:2}
+.login-title{font-family:'DM Serif Display',serif;font-size:22px;color:#1a1a18;margin-bottom:.4rem;letter-spacing:-.01em}
+.login-sub{font-size:14px;color:#888;margin-bottom:2rem;line-height:1.5}
+.login-footer{margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border);font-size:12px;color:#aaa;line-height:1.6}
+.admin-role-select{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:12px;color:#555;font-family:'DM Sans',sans-serif;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const NOMBRE_APP = "Fuengirola Emprende";
+const ROOMS = [
+  {id:'office1', name:'Oficina 1', desc:'Lado izquierdo', icon:'🏢', badge:'b-office1', strip:'ti-o1'},
+  {id:'office2', name:'Oficina 2', desc:'Lado derecho',   icon:'🏗️', badge:'b-office2', strip:'ti-o2'},
+  {id:'meeting', name:'Sala de reuniones', desc:'Espacio compartido', icon:'👥', badge:'b-meeting', strip:'ti-mt'}
+];
+const HOURS = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
+const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const DIAS  = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
+
+function hoyStr(){ return new Date().toISOString().split('T')[0]; }
+function parseD(s){ const[y,m,d]=s.split('-'); return new Date(y,m-1,d); }
+function fmtD(s){ return parseD(s).toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short',year:'numeric'}); }
+function t2m(t){ const[h,m]=t.split(':').map(Number); return h*60+m; }
+
+let state = {
+  loggedIn: false, currentUser: null, currentUserName: '', tab: 'reservar',
+  allowedEmails: [
+    {email:'soniafernandezponce@gmail.com', name:'Sonia Fernández', role:'admin'}
+  ],
+  bookings: [],
+  form: {room:'', date:hoyStr(), startTime:'', endTime:''},
+  filter:'all', calYear:new Date().getFullYear(), calMonth:new Date().getMonth(),
+  selectedDate:hoyStr(), conflict:null, bookingSuccess:false, loginError:'',
+  calendarId:'', calIdSaved:false
+};
+
+function checkConflict(room,date,start,end,excludeId=null){
+  const s1=t2m(start),e1=t2m(end);
+  return state.bookings.find(b=>{
+    if(b.id===excludeId||b.room!==room||b.date!==date) return false;
+    return s1<t2m(b.endTime)&&e1>t2m(b.startTime);
+  });
+}
+function getRoomName(id){ return ROOMS.find(r=>r.id===id)?.name||id; }
+function isAdmin(){ return state.allowedEmails.find(e=>e.email===state.currentUser)?.role==='admin'; }
+
+function render(){
+  const app=document.getElementById('app');
+  if(!state.loggedIn){ app.innerHTML=renderLogin(); bindLogin(); return; }
+  app.innerHTML=renderApp(); bindApp();
+}
+
+function renderLogin(){
+  return `<div class="login-wrap"><div class="login-card">
+    <div class="login-logo-wrap">
+      <div class="login-logo-mark"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div><div style="font-family:'DM Serif Display',serif;font-size:17px;color:#1a1a18;line-height:1.2">${NOMBRE_APP}</div><div style="font-size:11px;color:#aaa;letter-spacing:.04em;text-transform:uppercase;margin-top:2px">Reserva de salas</div></div>
+    </div>
+    <div class="login-title">Bienvenido</div>
+    <div class="login-sub">Introduce tu correo para acceder al sistema de reservas. Solo usuarios invitados pueden entrar.</div>
+    ${state.loginError?`<div class="alert danger"><span class="alert-icon">⚠</span><span>${state.loginError}</span></div>`:''}
+    <div class="form-group"><label>Correo electrónico</label><input id="lEmail" type="email" placeholder="tu@correo.com"/></div>
+    <div class="form-group" style="margin-bottom:1.25rem"><label>Tu nombre</label><input id="lName" type="text" placeholder="Nombre completo"/></div>
+    <button class="btn btn-primary" style="width:100%;padding:11px" id="loginBtn">Acceder →</button>
+    <div class="login-footer">¿No tienes acceso? Contacta con el administrador del espacio para que te añada a la lista.</div>
+  </div></div>`;
+}
+
+function bindLogin(){
+  const go = ()=>{
+    const email=document.getElementById('lEmail').value.trim().toLowerCase();
+    const name=document.getElementById('lName').value.trim();
+    const found=state.allowedEmails.find(e=>e.email===email);
+    if(!found){ state.loginError='Este correo no está en la lista de invitados. Contacta con el administrador.'; render(); return; }
+    state.loggedIn=true; state.currentUser=email; state.currentUserName=name||found.name; state.loginError=''; render();
+  };
+  document.getElementById('loginBtn').onclick=go;
+  ['lEmail','lName'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')go();}));
+}
+
+function renderApp(){
+  const tabs=[
+    {id:'reservar',  label:'Reservar sala'},
+    {id:'reservas',  label:'Todas las reservas'},
+    ...(isAdmin()?[{id:'admin',label:'Administración'}]:[]),
+    {id:'gcal', label:'Google Calendar'}
+  ];
+  return `<div class="app">
+    <div class="header">
+      <div class="logo">
+        <div class="logo-mark"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div><div class="logo-text-main">${NOMBRE_APP}</div><div class="logo-text-sub">Reserva de salas</div></div>
+      </div>
+      <div class="header-right">
+        <div class="user-pill"><div class="avatar">${state.currentUserName.charAt(0).toUpperCase()}</div>${state.currentUserName}${isAdmin()?'&nbsp;<span style="font-size:10px;background:#edf5f0;color:#1a5c3a;border-radius:999px;padding:1px 7px;border:1px solid #a8d5bc">admin</span>':''}</div>
+        <button class="btn btn-secondary btn-sm" id="logoutBtn">Salir</button>
+      </div>
+    </div>
+    <div class="tabs">${tabs.map(t=>`<button class="tab${state.tab===t.id?' active':''}" data-tab="${t.id}">${t.label}</button>`).join('')}</div>
+    <div class="panel${state.tab==='reservar'?' active':''}">${renderBookPanel()}</div>
+    <div class="panel${state.tab==='reservas'?' active':''}">${renderBookingsPanel()}</div>
+    ${isAdmin()?`<div class="panel${state.tab==='admin'?' active':''}">${renderAdminPanel()}</div>`:''}
+    <div class="panel${state.tab==='gcal'?' active':''}">${renderGCalPanel()}</div>
+  </div>`;
+}
+
+function renderBookPanel(){
+  const f=state.form, hoy=hoyStr();
+  const dim=new Date(state.calYear,state.calMonth+1,0).getDate();
+  let fd=new Date(state.calYear,state.calMonth,1).getDay(); fd=(fd+6)%7;
+  const monthTitle=`${MESES[state.calMonth]} ${state.calYear}`;
+
+  let cells='';
+  for(let i=0;i<fd;i++) cells+=`<div class="cal-day emp"></div>`;
+  for(let d=1;d<=dim;d++){
+    const ds=`${state.calYear}-${String(state.calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const cls=[
+      'cal-day',
+      ds===hoy?'today':'',
+      ds<hoy?'past':'',
+      ds===state.selectedDate?'sel':'',
+      state.bookings.some(b=>b.date===ds)?'has-bk':''
+    ].filter(Boolean).join(' ');
+    cells+=`<div class="${cls}" data-date="${ds}">${d}</div>`;
+  }
+
+  const taken = f.room ? state.bookings.filter(b=>b.room===f.room&&b.date===state.selectedDate).flatMap(b=>{
+    const sl=[]; let c=t2m(b.startTime); while(c<t2m(b.endTime)){sl.push(`${String(Math.floor(c/60)).padStart(2,'0')}:${String(c%60).padStart(2,'0')}`);c+=60;} return sl;
+  }) : [];
+
+  const si=HOURS.indexOf(f.startTime);
+  const endOpts=si>=0?HOURS.slice(si+1):[];
+
+  let alertHtml='';
+  if(state.conflict) alertHtml=`<div class="alert danger"><span class="alert-icon">⚠</span><span><strong>Conflicto de reserva.</strong> ${getRoomName(f.room)} ya está reservada por <strong>${state.conflict.userName}</strong> de ${state.conflict.startTime} a ${state.conflict.endTime}. Por favor elige otro horario.</span></div>`;
+  if(state.bookingSuccess) alertHtml=`<div class="alert success"><span class="alert-icon">✓</span><span><strong>¡Reserva confirmada!</strong> Tu reserva se ha guardado correctamente.</span></div>`;
+
+  const todayBks=state.bookings.filter(b=>b.date===hoy).sort((a,b)=>a.startTime.localeCompare(b.startTime));
+
+  return `
+  ${todayBks.length>0?`<div style="margin-bottom:1.75rem">
+    <div class="section-label">Reservas de hoy</div>
+    <div class="today-strip">${todayBks.map(b=>{
+      const r=ROOMS.find(x=>x.id===b.room);
+      return `<div class="today-item ${r?.strip||''}">
+        <span style="font-size:16px">${r?.icon||'📋'}</span>
+        <span style="font-weight:500">${getRoomName(b.room)}</span>
+        <span style="color:#888">${b.startTime}–${b.endTime}</span>
+        <span style="color:#ccc">·</span>
+        <span style="color:#888">${b.userName}</span>
+      </div>`;
+    }).join('')}</div></div>`:''}
+
+  <div class="section-label">Selecciona una sala</div>
+  <div class="room-grid">
+    ${ROOMS.map(r=>`<div class="room-card${f.room===r.id?' selected':''}" data-room="${r.id}">
+      <div class="room-icon" style="background:${r.id==='office1'?'#ede9fe':r.id==='office2'?'#dcfce7':'#fef3c7'}">${r.icon}</div>
+      <div class="room-name">${r.name}</div>
+      <div class="room-desc">${r.desc}</div>
+      <div class="room-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+    </div>`).join('')}
+  </div>
+
+  <div class="card">
+    <h3>Elige una fecha</h3>
+    <div class="cal-wrap">
+      <div class="cal-head">
+        <div class="cal-nav-btns">
+          <button id="calPrev">‹</button>
+          <span class="cal-month-title">${monthTitle}</span>
+          <button id="calNext">›</button>
+        </div>
+        <span style="font-size:12px;color:#aaa">${fmtD(state.selectedDate)}</span>
+      </div>
+      <div class="cal-grid">
+        ${DIAS.map(d=>`<div class="cal-day-lbl">${d}</div>`).join('')}
+        ${cells}
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Selecciona el horario</h3>
+    ${!f.room?`<p class="hint" style="margin-bottom:.75rem">← Primero elige una sala arriba</p>`:''}
+    <div class="section-label" style="margin-bottom:.5rem">Hora de inicio</div>
+    <div class="time-grid" style="margin-bottom:${f.startTime?'1.25rem':'0'}">
+      ${HOURS.map(h=>`<button class="tslot${f.startTime===h?' sel':''}${taken.includes(h)&&f.room?' taken':''}" data-start="${h}">${h}</button>`).join('')}
+    </div>
+    ${f.startTime?`<div class="section-label" style="margin-bottom:.5rem">Hora de fin</div>
+    <div class="time-grid">
+      ${endOpts.map(h=>`<button class="tslot${f.endTime===h?' sel':''}${taken.includes(h)&&f.room?' taken':''}" data-end="${h}">${h}</button>`).join('')}
+    </div>`:''}
+  </div>
+
+  ${alertHtml}
+  ${f.room&&f.startTime&&f.endTime?`<div class="alert info" style="margin-bottom:1rem"><span class="alert-icon">ℹ</span><span>Vas a reservar <strong>${getRoomName(f.room)}</strong> para <strong>${state.currentUserName}</strong> el <strong>${fmtD(state.selectedDate)}</strong>, de <strong>${f.startTime}</strong> a <strong>${f.endTime}</strong></span></div>`:''}
+  <button class="btn btn-primary" style="width:100%;padding:12px;font-size:14px" id="submitBooking" ${!f.room||!f.startTime||!f.endTime?'disabled':''}>Confirmar reserva</button>`;
+}
+
+function renderBookingsPanel(){
+  const filters=[{id:'all',label:'Todas las salas'},...ROOMS.map(r=>({id:r.id,label:r.name}))];
+  let list=[...state.bookings].filter(b=>state.filter==='all'||b.room===state.filter).sort((a,b)=>(a.date+a.startTime).localeCompare(b.date+b.startTime));
+  const hoy=hoyStr();
+  const up=list.filter(b=>b.date>=hoy), past=list.filter(b=>b.date<hoy);
+
+  return `<div class="filter-bar">
+    ${filters.map(f=>`<button class="filter-btn${state.filter===f.id?' active':''}" data-filter="${f.id}">${f.label}</button>`).join('')}
+    <span style="margin-left:auto;font-size:12px;color:#aaa">${list.length} reserva${list.length!==1?'s':''}</span>
+  </div>
+  ${list.length===0?`<div class="empty-state"><div style="font-size:36px;margin-bottom:12px">📅</div>No hay reservas todavía</div>`:''}
+  ${up.length>0?`<div class="section-label">Próximas y hoy</div><div class="booking-list" style="margin-bottom:1.75rem">${up.map(bkItem).join('')}</div>`:''}
+  ${past.length>0?`<div class="section-label">Pasadas</div><div class="booking-list" style="opacity:.6">${past.map(bkItem).join('')}</div>`:''}`;
+}
+
+function bkItem(b){
+  const r=ROOMS.find(x=>x.id===b.room);
+  const canDel=b.userId===state.currentUser||isAdmin();
+  return `<div class="bk-item">
+    <span style="font-size:20px">${r?.icon||'📋'}</span>
+    <div class="bk-meta">
+      <div class="bk-name">${b.userName}</div>
+      <div class="bk-detail">${fmtD(b.date)} &nbsp;·&nbsp; ${b.startTime}–${b.endTime}</div>
+    </div>
+    <span class="badge ${r?.badge||''}">${r?.name||b.room}</span>
+    ${canDel?`<button class="del-btn" data-del="${b.id}" title="Cancelar reserva">✕</button>`:''}
+  </div>`;
+}
+
+function renderAdminPanel(){
+  return `<div>
+  <div class="card">
+    <h3>Miembros invitados</h3>
+    <p style="font-size:13px;color:#888;margin-bottom:1rem">Aquí puedes añadir o eliminar personas. Cualquier miembro puede ser administrador — los administradores pueden gestionar reservas y usuarios.</p>
+    <div id="emailList">
+      ${state.allowedEmails.map(e=>`<div class="email-row">
+        <div><span style="color:#1a1a18">${e.name}</span> <span style="color:#aaa;font-size:12px">${e.email}</span></div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <select class="admin-role-select" data-role-email="${e.email}">
+            <option value="miembro"${e.role==='miembro'?' selected':''}>Miembro</option>
+            <option value="admin"${e.role==='admin'?' selected':''}>Admin</option>
+          </select>
+          ${e.email!==state.currentUser?`<button class="remove-btn" data-remove="${e.email}">Eliminar</button>`:'<span style="font-size:11px;color:#aaa">(tú)</span>'}
+        </div>
+      </div>`).join('')}
+    </div>
+    <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border)">
+      <div class="section-label" style="margin-bottom:.75rem">Añadir nuevo miembro</div>
+      <div class="form-row" style="margin-bottom:10px">
+        <div class="form-group" style="margin-bottom:0"><label>Correo electrónico</label><input id="nEmail" type="email" placeholder="nuevo@correo.com"/></div>
+        <div class="form-group" style="margin-bottom:0"><label>Nombre completo</label><input id="nName" type="text" placeholder="Nombre y apellidos"/></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <select id="nRole" class="admin-role-select" style="padding:8px 12px;font-size:13px">
+          <option value="miembro">Miembro</option>
+          <option value="admin">Admin</option>
+        </select>
+        <button class="btn btn-primary btn-sm" id="addMember">Añadir</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Gestión de reservas</h3>
+    ${state.bookings.length===0?'<p style="font-size:13px;color:#aaa">No hay reservas todavía.</p>':
+    `<div class="booking-list">${[...state.bookings].sort((a,b)=>(a.date+a.startTime).localeCompare(b.date+b.startTime)).map(bkItem).join('')}</div>`}
+  </div></div>`;
+}
+
+function renderGCalPanel(){
+  return `<div>
+  <div class="card">
+    <h3>Cómo conectar Google Calendar</h3>
+    <p style="font-size:13px;color:#888;margin-bottom:1.25rem">Sigue estos pasos para que las reservas aparezcan automáticamente en el calendario de Google del espacio.</p>
+    <ol class="gcal-steps">
+      <li><div><strong>Crea un proyecto en Google Cloud</strong><br>Ve a <a href="https://console.cloud.google.com" style="color:var(--accent)">console.cloud.google.com</a>, haz clic en "Nuevo proyecto" y llámalo <code>ReservasFuengirola</code>.</div></li>
+      <li><div><strong>Activa la API de Google Calendar</strong><br>Dentro del proyecto ve a <em>APIs y servicios → Biblioteca</em>, busca <code>Google Calendar API</code> y haz clic en Activar.</div></li>
+      <li><div><strong>Crea credenciales OAuth 2.0</strong><br>Ve a <em>Credenciales → Crear credenciales → ID de cliente OAuth</em>. Elige <em>Aplicación web</em> y añade tu dominio de Vercel (p.ej. <code>reservas-fuengirola.vercel.app</code>).</div></li>
+      <li><div><strong>Comparte tu calendario con la app</strong><br>En Google Calendar abre la <em>Configuración del calendario → Compartir con personas</em> y añade el correo de la cuenta de servicio con permiso para <em>Realizar cambios en eventos</em>.</div></li>
+      <li><div><strong>Copia el ID del calendario</strong><br>En la misma configuración encontrarás el <em>ID del calendario</em>, con este aspecto: <code>abc123@group.calendar.google.com</code>. Cópialo.</div></li>
+      <li><div><strong>Pégalo aquí abajo</strong><br>Introduce el ID en el campo de abajo y guárdalo. Luego pídele al desarrollador que conecte la librería <code>gapi</code> en el código para que las reservas se sincronicen.</div></li>
+      <li><div><strong>Formato de los eventos</strong><br>Cada reserva creará un evento con el título <code>[Sala] – Nombre del usuario</code>, en la fecha y hora exactas, con el correo del usuario como asistente.</div></li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>ID de tu Google Calendar</h3>
+    <p style="font-size:13px;color:#888;margin-bottom:1rem">Una vez tengas el ID, pégalo aquí para tenerlo guardado y listo para la integración.</p>
+    <div class="form-group"><label>ID del calendario</label><input id="calIdInput" type="text" placeholder="tu-calendario@group.calendar.google.com" value="${state.calendarId}"/></div>
+    <button class="btn btn-primary btn-sm" id="saveCalId">Guardar</button>
+    ${state.calIdSaved?`<div class="alert success" style="margin-top:1rem"><span class="alert-icon">✓</span><span>ID guardado. Cuando conectes la API de Google, las reservas se sincronizarán automáticamente.</span></div>`:''}
+  </div></div>`;
+}
+
+function bindApp(){
+  document.getElementById('logoutBtn').onclick=()=>{ state.loggedIn=false; state.currentUser=null; render(); };
+  document.querySelectorAll('[data-tab]').forEach(t=>t.onclick=()=>{ state.tab=t.dataset.tab; state.conflict=null; state.bookingSuccess=false; render(); });
+  document.querySelectorAll('[data-room]').forEach(r=>r.onclick=()=>{ state.form.room=r.dataset.room; state.form.startTime=''; state.form.endTime=''; state.conflict=null; state.bookingSuccess=false; render(); });
+  document.querySelectorAll('.cal-day:not(.emp):not(.past)').forEach(d=>d.onclick=()=>{
+    if(!d.dataset.date) return;
+    state.selectedDate=d.dataset.date; state.form.date=d.dataset.date; state.form.startTime=''; state.form.endTime=''; state.conflict=null; state.bookingSuccess=false; render();
+  });
+  const cp=document.getElementById('calPrev'), cn=document.getElementById('calNext');
+  if(cp) cp.onclick=()=>{ state.calMonth--; if(state.calMonth<0){state.calMonth=11;state.calYear--;} render(); };
+  if(cn) cn.onclick=()=>{ state.calMonth++; if(state.calMonth>11){state.calMonth=0;state.calYear++;} render(); };
+  document.querySelectorAll('[data-start]').forEach(s=>s.onclick=()=>{ if(s.classList.contains('taken')) return; state.form.startTime=s.dataset.start; state.form.endTime=''; state.conflict=null; state.bookingSuccess=false; render(); });
+  document.querySelectorAll('[data-end]').forEach(s=>s.onclick=()=>{ if(s.classList.contains('taken')) return; state.form.endTime=s.dataset.end; state.conflict=null; state.bookingSuccess=false; render(); });
+
+  const sub=document.getElementById('submitBooking');
+  if(sub) sub.onclick=()=>{
+    const f=state.form;
+    const clash=checkConflict(f.room,f.date,f.startTime,f.endTime);
+    if(clash){ state.conflict=clash; state.bookingSuccess=false; render(); return; }
+    state.bookings.push({id:Date.now(), userId:state.currentUser, userName:state.currentUserName, room:f.room, date:f.date, startTime:f.startTime, endTime:f.endTime});
+    state.form={room:'',date:hoyStr(),startTime:'',endTime:''}; state.conflict=null; state.bookingSuccess=true; render();
+  };
+
+  document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{ state.filter=b.dataset.filter; render(); });
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
+    if(confirm('¿Cancelar esta reserva?')){ state.bookings=state.bookings.filter(bk=>bk.id!=b.dataset.del); render(); }
+  });
+
+  document.querySelectorAll('[data-role-email]').forEach(sel=>sel.onchange=()=>{
+    const entry=state.allowedEmails.find(e=>e.email===sel.dataset.roleEmail);
+    if(entry) entry.role=sel.value; render();
+  });
+
+  const addM=document.getElementById('addMember');
+  if(addM) addM.onclick=()=>{
+    const email=document.getElementById('nEmail')?.value.trim().toLowerCase();
+    const name=document.getElementById('nName')?.value.trim();
+    const role=document.getElementById('nRole')?.value||'miembro';
+    if(!email||!name){ alert('Por favor rellena el correo y el nombre.'); return; }
+    if(state.allowedEmails.find(x=>x.email===email)){ alert('Este correo ya está en la lista.'); return; }
+    state.allowedEmails.push({email,name,role}); render();
+  };
+
+  document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{
+    if(confirm(`¿Eliminar a ${b.dataset.remove} de la lista de invitados?`)){ state.allowedEmails=state.allowedEmails.filter(e=>e.email!==b.dataset.remove); render(); }
+  });
+
+  const sc=document.getElementById('saveCalId');
+  if(sc) sc.onclick=()=>{ state.calendarId=document.getElementById('calIdInput').value; state.calIdSaved=true; render(); };
+}
+
+render();
+</script>
+</body>
+</html>
