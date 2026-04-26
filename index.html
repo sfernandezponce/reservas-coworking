@@ -8,52 +8,50 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:#f5f4f1;min-height:100vh;color:#1a1a18}
-:root{--accent:#1a5c3a;--accent-light:#edf5f0;--accent-border:#a8d5bc;--danger:#c0392b;--danger-light:#fdf0ee;--success:#1a5c3a;--success-light:#edf5f0;--border:#e2e0da;--bg:#ffffff;--bg2:#f5f4f1;--radius:10px;--radius-lg:14px}
+:root{--accent:#1a5c3a;--accent-light:#edf5f0;--accent-border:#a8d5bc;--danger:#c0392b;--danger-light:#fdf0ee;--success:#1a5c3a;--success-light:#edf5f0;--border:#e2e0da;--bg:#ffffff;--bg2:#f5f4f1}
 .app{max-width:920px;margin:0 auto;padding:2rem 1.25rem}
 .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
 .logo{display:flex;align-items:center;gap:12px}
 .logo-mark{width:38px;height:38px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-mark svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2}
 .logo-text-main{font-family:'DM Serif Display',serif;font-size:16px;color:#1a1a18;line-height:1.2}
 .logo-text-sub{font-size:11px;color:#888;letter-spacing:.04em;text-transform:uppercase;margin-top:1px}
 .header-right{display:flex;align-items:center;gap:10px}
 .user-pill{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:5px 14px 5px 7px;font-size:13px;color:#555}
 .avatar{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.btn{padding:9px 18px;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;font-family:'DM Sans',sans-serif}
+.btn{padding:9px 18px;border-radius:10px;font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;font-family:'DM Sans',sans-serif}
 .btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:#154d31}
 .btn-secondary{background:var(--bg);border:1px solid var(--border);color:#333}.btn-secondary:hover{background:var(--bg2)}
 .btn-sm{padding:7px 14px;font-size:12px}
 .btn:disabled{opacity:.4;cursor:not-allowed}
-.tabs{display:flex;gap:3px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;margin-bottom:2rem;width:fit-content;flex-wrap:wrap}
+.tabs{display:flex;gap:3px;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:4px;margin-bottom:2rem;width:fit-content;flex-wrap:wrap}
 .tab{padding:8px 18px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;color:#666;border:none;background:transparent;transition:all .15s;font-family:'DM Sans',sans-serif}
 .tab.active{background:var(--accent);color:#fff}
 .tab:hover:not(.active){color:#1a1a18;background:var(--bg2)}
 .panel{display:none}.panel.active{display:block}
 .section-label{font-size:11px;font-weight:500;color:#999;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem}
 .room-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:2rem}
-.room-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;cursor:pointer;transition:all .15s;position:relative}
+.room-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1.25rem;cursor:pointer;transition:all .15s;position:relative}
 .room-card:hover{border-color:var(--accent-border);background:var(--accent-light)}
 .room-card.selected{border:2px solid var(--accent);background:var(--accent-light)}
 .room-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:18px}
 .room-name{font-size:14px;font-weight:500;color:#1a1a18;margin-bottom:3px}
 .room-desc{font-size:12px;color:#888}
 .room-check{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:50%;background:var(--accent);display:none;align-items:center;justify-content:center}
-.room-check svg{width:11px;height:11px;fill:none;stroke:#fff;stroke-width:2.5}
 .room-card.selected .room-check{display:flex}
-.card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.25rem}
+.card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem}
 .card h3{font-size:14px;font-weight:500;color:#1a1a18;margin-bottom:1rem}
 .form-group{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
 .form-group:last-child{margin-bottom:0}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 label{font-size:11px;font-weight:500;color:#888;text-transform:uppercase;letter-spacing:.05em}
-input,select{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;font-size:14px;color:#1a1a18;font-family:'DM Sans',sans-serif;width:100%;outline:none;transition:border-color .15s}
+input,select{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:14px;color:#1a1a18;font-family:'DM Sans',sans-serif;width:100%;outline:none;transition:border-color .15s}
 input:focus,select:focus{border-color:var(--accent);background:#fff}
-.alert{border-radius:var(--radius);padding:12px 14px;font-size:13px;margin-bottom:1rem;display:flex;align-items:flex-start;gap:9px;line-height:1.5}
+.alert{border-radius:10px;padding:12px 14px;font-size:13px;margin-bottom:1rem;display:flex;align-items:flex-start;gap:9px;line-height:1.5}
 .alert.danger{background:var(--danger-light);color:var(--danger);border:1px solid #f5c6c2}
 .alert.success{background:var(--success-light);color:var(--success);border:1px solid var(--accent-border)}
 .alert.info{background:var(--accent-light);color:var(--accent);border:1px solid var(--accent-border)}
 .alert-icon{flex-shrink:0;font-size:14px;margin-top:1px}
-.cal-wrap{border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:1.25rem}
+.cal-wrap{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.25rem}
 .cal-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg2)}
 .cal-nav-btns{display:flex;align-items:center;gap:10px}
 .cal-nav-btns button{background:var(--bg);border:1px solid var(--border);border-radius:7px;width:28px;height:28px;cursor:pointer;color:#555;font-size:14px;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
@@ -75,7 +73,7 @@ input:focus,select:focus{border-color:var(--accent);background:#fff}
 .tslot.taken{background:var(--bg2);color:#bbb;cursor:not-allowed;text-decoration:line-through}
 .hint{font-size:12px;color:#aaa;margin-top:6px}
 .booking-list{display:flex;flex-direction:column;gap:8px}
-.bk-item{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:13px 16px;display:flex;align-items:center;gap:12px}
+.bk-item{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:13px 16px;display:flex;align-items:center;gap:12px}
 .bk-meta{flex:1;display:flex;flex-direction:column;gap:3px}
 .bk-name{font-size:14px;font-weight:500;color:#1a1a18}
 .bk-detail{font-size:12px;color:#888}
@@ -90,37 +88,50 @@ input:focus,select:focus{border-color:var(--accent);background:#fff}
 .filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 .empty-state{text-align:center;padding:3rem;color:#aaa;font-size:14px}
 .email-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:var(--bg2);border-radius:8px;font-size:13px;margin-bottom:6px}
-.role-badge{font-size:11px;color:#888;background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:2px 9px}
 .remove-btn{color:var(--danger);font-size:12px;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;padding:2px 6px}
 .remove-btn:hover{text-decoration:underline}
+.admin-role-select{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:12px;color:#555;font-family:'DM Sans',sans-serif;cursor:pointer}
 .gcal-steps{list-style:none;counter-reset:s}
 .gcal-steps li{counter-increment:s;display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;color:#666;line-height:1.6}
 .gcal-steps li:last-child{border-bottom:none}
 .gcal-steps li::before{content:counter(s);min-width:22px;height:22px;background:var(--accent-light);color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:2px}
 .gcal-steps li strong{color:#1a1a18}
 code{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:12px;color:#333}
-.today-strip{display:flex;flex-direction:column;gap:6px;margin-bottom:1.5rem}
+.today-strip{display:flex;flex-direction:column;gap:6px}
 .today-item{background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:10px 14px;font-size:13px;display:flex;align-items:center;gap:10px;border-left:3px solid transparent}
 .ti-o1{border-left-color:#7c3aed}.ti-o2{border-left-color:#16a34a}.ti-mt{border-left-color:#d97706}
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;background:#f5f4f1}
 .login-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:2.75rem;width:100%;max-width:420px}
 .login-logo-wrap{display:flex;align-items:center;gap:12px;margin-bottom:2rem}
 .login-logo-mark{width:44px;height:44px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.login-logo-mark svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:2}
 .login-title{font-family:'DM Serif Display',serif;font-size:22px;color:#1a1a18;margin-bottom:.4rem;letter-spacing:-.01em}
 .login-sub{font-size:14px;color:#888;margin-bottom:2rem;line-height:1.5}
 .login-footer{margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border);font-size:12px;color:#aaa;line-height:1.6}
-.admin-role-select{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:12px;color:#555;font-family:'DM Sans',sans-serif;cursor:pointer}
 </style>
 </head>
 <body>
 <div id="app"></div>
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBZnWIp-PlCY_Ui2xcz6FSZp6SoOUofWDw",
+  authDomain: "reservas-coworking.firebaseapp.com",
+  projectId: "reservas-coworking",
+  storageBucket: "reservas-coworking.firebasestorage.app",
+  messagingSenderId: "341656478236",
+  appId: "1:341656478236:web:e73ede57c3e0e2456735d9"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+
 const NOMBRE_APP = "Fuengirola Emprende";
 const ROOMS = [
-  {id:'office1', name:'Oficina 1', desc:'Lado izquierdo', icon:'🏢', badge:'b-office1', strip:'ti-o1'},
-  {id:'office2', name:'Oficina 2', desc:'Lado derecho',   icon:'🏗️', badge:'b-office2', strip:'ti-o2'},
-  {id:'meeting', name:'Sala de reuniones', desc:'Espacio compartido', icon:'👥', badge:'b-meeting', strip:'ti-mt'}
+  {id:'office1', name:'Oficina 1',         desc:'Lado izquierdo',    icon:'🏢', badge:'b-office1', strip:'ti-o1'},
+  {id:'office2', name:'Oficina 2',         desc:'Lado derecho',      icon:'🏗️', badge:'b-office2', strip:'ti-o2'},
+  {id:'meeting', name:'Sala de reuniones', desc:'Espacio compartido', icon:'👥', badge:'b-meeting',  strip:'ti-mt'}
 ];
 const HOURS = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
 const MESES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -132,16 +143,44 @@ function fmtD(s){ return parseD(s).toLocaleDateString('es-ES',{weekday:'short',d
 function t2m(t){ const[h,m]=t.split(':').map(Number); return h*60+m; }
 
 let state = {
-  loggedIn: false, currentUser: null, currentUserName: '', tab: 'reservar',
-  allowedEmails: [
-    {email:'soniafernandezponce@gmail.com', name:'Sonia Fernández', role:'admin'}
-  ],
-  bookings: [],
-  form: {room:'', date:hoyStr(), startTime:'', endTime:''},
+  loggedIn:false, currentUser:null, currentUserName:'', tab:'reservar',
+  allowedEmails:[], bookings:[],
+  form:{room:'',date:hoyStr(),startTime:'',endTime:''},
   filter:'all', calYear:new Date().getFullYear(), calMonth:new Date().getMonth(),
   selectedDate:hoyStr(), conflict:null, bookingSuccess:false, loginError:'',
-  calendarId:'', calIdSaved:false
+  calendarId:'', calIdSaved:false, loading:true
 };
+
+async function loadData(){
+  try {
+    const [usersSnap, bookingsSnap] = await Promise.all([
+      getDocs(collection(db,'users')),
+      getDocs(collection(db,'bookings'))
+    ]);
+    state.allowedEmails = usersSnap.docs.map(d=>({id:d.id,...d.data()}));
+    state.bookings      = bookingsSnap.docs.map(d=>({id:d.id,...d.data()}));
+    if(state.allowedEmails.length===0){
+      await setDoc(doc(db,'users','soniafernandezponce@gmail.com'),{
+        email:'soniafernandezponce@gmail.com', name:'Sonia Fernández', role:'admin'
+      });
+      state.allowedEmails=[{id:'soniafernandezponce@gmail.com',email:'soniafernandezponce@gmail.com',name:'Sonia Fernández',role:'admin'}];
+    }
+  } catch(e){ console.error('Error cargando datos:',e); }
+  state.loading=false;
+  render();
+  listenRealtime();
+}
+
+function listenRealtime(){
+  onSnapshot(collection(db,'bookings'), snap=>{
+    state.bookings=snap.docs.map(d=>({id:d.id,...d.data()}));
+    if(state.loggedIn) render();
+  });
+  onSnapshot(collection(db,'users'), snap=>{
+    state.allowedEmails=snap.docs.map(d=>({id:d.id,...d.data()}));
+    if(state.loggedIn) render();
+  });
+}
 
 function checkConflict(room,date,start,end,excludeId=null){
   const s1=t2m(start),e1=t2m(end);
@@ -155,6 +194,10 @@ function isAdmin(){ return state.allowedEmails.find(e=>e.email===state.currentUs
 
 function render(){
   const app=document.getElementById('app');
+  if(state.loading){
+    app.innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;color:#888;font-size:14px">Cargando...</div>`;
+    return;
+  }
   if(!state.loggedIn){ app.innerHTML=renderLogin(); bindLogin(); return; }
   app.innerHTML=renderApp(); bindApp();
 }
@@ -162,7 +205,7 @@ function render(){
 function renderLogin(){
   return `<div class="login-wrap"><div class="login-card">
     <div class="login-logo-wrap">
-      <div class="login-logo-mark"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <div class="login-logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
       <div><div style="font-family:'DM Serif Display',serif;font-size:17px;color:#1a1a18;line-height:1.2">${NOMBRE_APP}</div><div style="font-size:11px;color:#aaa;letter-spacing:.04em;text-transform:uppercase;margin-top:2px">Reserva de salas</div></div>
     </div>
     <div class="login-title">Bienvenido</div>
@@ -171,12 +214,12 @@ function renderLogin(){
     <div class="form-group"><label>Correo electrónico</label><input id="lEmail" type="email" placeholder="tu@correo.com"/></div>
     <div class="form-group" style="margin-bottom:1.25rem"><label>Tu nombre</label><input id="lName" type="text" placeholder="Nombre completo"/></div>
     <button class="btn btn-primary" style="width:100%;padding:11px" id="loginBtn">Acceder →</button>
-    <div class="login-footer">¿No tienes acceso? Contacta con el administrador del espacio para que te añada a la lista.</div>
+    <div class="login-footer">¿No tienes acceso? Contacta con el administrador del espacio para que te añada.</div>
   </div></div>`;
 }
 
 function bindLogin(){
-  const go = ()=>{
+  const go=()=>{
     const email=document.getElementById('lEmail').value.trim().toLowerCase();
     const name=document.getElementById('lName').value.trim();
     const found=state.allowedEmails.find(e=>e.email===email);
@@ -184,20 +227,20 @@ function bindLogin(){
     state.loggedIn=true; state.currentUser=email; state.currentUserName=name||found.name; state.loginError=''; render();
   };
   document.getElementById('loginBtn').onclick=go;
-  ['lEmail','lName'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')go();}));
+  ['lEmail','lName'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{ if(e.key==='Enter') go(); }));
 }
 
 function renderApp(){
   const tabs=[
-    {id:'reservar',  label:'Reservar sala'},
-    {id:'reservas',  label:'Todas las reservas'},
+    {id:'reservar', label:'Reservar sala'},
+    {id:'reservas', label:'Todas las reservas'},
     ...(isAdmin()?[{id:'admin',label:'Administración'}]:[]),
     {id:'gcal', label:'Google Calendar'}
   ];
   return `<div class="app">
     <div class="header">
       <div class="logo">
-        <div class="logo-mark"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
         <div><div class="logo-text-main">${NOMBRE_APP}</div><div class="logo-text-sub">Reserva de salas</div></div>
       </div>
       <div class="header-right">
@@ -218,89 +261,38 @@ function renderBookPanel(){
   const dim=new Date(state.calYear,state.calMonth+1,0).getDate();
   let fd=new Date(state.calYear,state.calMonth,1).getDay(); fd=(fd+6)%7;
   const monthTitle=`${MESES[state.calMonth]} ${state.calYear}`;
-
   let cells='';
   for(let i=0;i<fd;i++) cells+=`<div class="cal-day emp"></div>`;
   for(let d=1;d<=dim;d++){
     const ds=`${state.calYear}-${String(state.calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const cls=[
-      'cal-day',
-      ds===hoy?'today':'',
-      ds<hoy?'past':'',
-      ds===state.selectedDate?'sel':'',
-      state.bookings.some(b=>b.date===ds)?'has-bk':''
-    ].filter(Boolean).join(' ');
+    const cls=['cal-day',ds===hoy?'today':'',ds<hoy?'past':'',ds===state.selectedDate?'sel':'',state.bookings.some(b=>b.date===ds)?'has-bk':''].filter(Boolean).join(' ');
     cells+=`<div class="${cls}" data-date="${ds}">${d}</div>`;
   }
-
-  const taken = f.room ? state.bookings.filter(b=>b.room===f.room&&b.date===state.selectedDate).flatMap(b=>{
+  const taken=f.room?state.bookings.filter(b=>b.room===f.room&&b.date===state.selectedDate).flatMap(b=>{
     const sl=[]; let c=t2m(b.startTime); while(c<t2m(b.endTime)){sl.push(`${String(Math.floor(c/60)).padStart(2,'0')}:${String(c%60).padStart(2,'0')}`);c+=60;} return sl;
-  }) : [];
-
+  }):[];
   const si=HOURS.indexOf(f.startTime);
   const endOpts=si>=0?HOURS.slice(si+1):[];
-
   let alertHtml='';
   if(state.conflict) alertHtml=`<div class="alert danger"><span class="alert-icon">⚠</span><span><strong>Conflicto de reserva.</strong> ${getRoomName(f.room)} ya está reservada por <strong>${state.conflict.userName}</strong> de ${state.conflict.startTime} a ${state.conflict.endTime}. Por favor elige otro horario.</span></div>`;
   if(state.bookingSuccess) alertHtml=`<div class="alert success"><span class="alert-icon">✓</span><span><strong>¡Reserva confirmada!</strong> Tu reserva se ha guardado correctamente.</span></div>`;
-
   const todayBks=state.bookings.filter(b=>b.date===hoy).sort((a,b)=>a.startTime.localeCompare(b.startTime));
-
   return `
-  ${todayBks.length>0?`<div style="margin-bottom:1.75rem">
-    <div class="section-label">Reservas de hoy</div>
-    <div class="today-strip">${todayBks.map(b=>{
-      const r=ROOMS.find(x=>x.id===b.room);
-      return `<div class="today-item ${r?.strip||''}">
-        <span style="font-size:16px">${r?.icon||'📋'}</span>
-        <span style="font-weight:500">${getRoomName(b.room)}</span>
-        <span style="color:#888">${b.startTime}–${b.endTime}</span>
-        <span style="color:#ccc">·</span>
-        <span style="color:#888">${b.userName}</span>
-      </div>`;
-    }).join('')}</div></div>`:''}
-
+  ${todayBks.length>0?`<div style="margin-bottom:1.75rem"><div class="section-label">Reservas de hoy</div><div class="today-strip">${todayBks.map(b=>{const r=ROOMS.find(x=>x.id===b.room);return`<div class="today-item ${r?.strip||''}"><span style="font-size:16px">${r?.icon||'📋'}</span><span style="font-weight:500">${getRoomName(b.room)}</span><span style="color:#888">${b.startTime}–${b.endTime}</span><span style="color:#ccc">·</span><span style="color:#888">${b.userName}</span></div>`;}).join('')}</div></div>`:''}
   <div class="section-label">Selecciona una sala</div>
-  <div class="room-grid">
-    ${ROOMS.map(r=>`<div class="room-card${f.room===r.id?' selected':''}" data-room="${r.id}">
-      <div class="room-icon" style="background:${r.id==='office1'?'#ede9fe':r.id==='office2'?'#dcfce7':'#fef3c7'}">${r.icon}</div>
-      <div class="room-name">${r.name}</div>
-      <div class="room-desc">${r.desc}</div>
-      <div class="room-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
-    </div>`).join('')}
-  </div>
-
-  <div class="card">
-    <h3>Elige una fecha</h3>
+  <div class="room-grid">${ROOMS.map(r=>`<div class="room-card${f.room===r.id?' selected':''}" data-room="${r.id}"><div class="room-icon" style="background:${r.id==='office1'?'#ede9fe':r.id==='office2'?'#dcfce7':'#fef3c7'}">${r.icon}</div><div class="room-name">${r.name}</div><div class="room-desc">${r.desc}</div><div class="room-check"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div></div>`).join('')}</div>
+  <div class="card"><h3>Elige una fecha</h3>
     <div class="cal-wrap">
-      <div class="cal-head">
-        <div class="cal-nav-btns">
-          <button id="calPrev">‹</button>
-          <span class="cal-month-title">${monthTitle}</span>
-          <button id="calNext">›</button>
-        </div>
-        <span style="font-size:12px;color:#aaa">${fmtD(state.selectedDate)}</span>
-      </div>
-      <div class="cal-grid">
-        ${DIAS.map(d=>`<div class="cal-day-lbl">${d}</div>`).join('')}
-        ${cells}
-      </div>
+      <div class="cal-head"><div class="cal-nav-btns"><button id="calPrev">‹</button><span class="cal-month-title">${monthTitle}</span><button id="calNext">›</button></div><span style="font-size:12px;color:#aaa">${fmtD(state.selectedDate)}</span></div>
+      <div class="cal-grid">${DIAS.map(d=>`<div class="cal-day-lbl">${d}</div>`).join('')}${cells}</div>
     </div>
   </div>
-
-  <div class="card">
-    <h3>Selecciona el horario</h3>
+  <div class="card"><h3>Selecciona el horario</h3>
     ${!f.room?`<p class="hint" style="margin-bottom:.75rem">← Primero elige una sala arriba</p>`:''}
     <div class="section-label" style="margin-bottom:.5rem">Hora de inicio</div>
-    <div class="time-grid" style="margin-bottom:${f.startTime?'1.25rem':'0'}">
-      ${HOURS.map(h=>`<button class="tslot${f.startTime===h?' sel':''}${taken.includes(h)&&f.room?' taken':''}" data-start="${h}">${h}</button>`).join('')}
-    </div>
-    ${f.startTime?`<div class="section-label" style="margin-bottom:.5rem">Hora de fin</div>
-    <div class="time-grid">
-      ${endOpts.map(h=>`<button class="tslot${f.endTime===h?' sel':''}${taken.includes(h)&&f.room?' taken':''}" data-end="${h}">${h}</button>`).join('')}
-    </div>`:''}
+    <div class="time-grid" style="margin-bottom:${f.startTime?'1.25rem':'0'}">${HOURS.map(h=>`<button class="tslot${f.startTime===h?' sel':''}${taken.includes(h)&&f.room?' taken':''}" data-start="${h}">${h}</button>`).join('')}</div>
+    ${f.startTime?`<div class="section-label" style="margin-bottom:.5rem">Hora de fin</div><div class="time-grid">${endOpts.map(h=>`<button class="tslot${f.endTime===h?' sel':''}${taken.includes(h)&&f.room?' taken':''}" data-end="${h}">${h}</button>`).join('')}</div>`:''}
   </div>
-
   ${alertHtml}
   ${f.room&&f.startTime&&f.endTime?`<div class="alert info" style="margin-bottom:1rem"><span class="alert-icon">ℹ</span><span>Vas a reservar <strong>${getRoomName(f.room)}</strong> para <strong>${state.currentUserName}</strong> el <strong>${fmtD(state.selectedDate)}</strong>, de <strong>${f.startTime}</strong> a <strong>${f.endTime}</strong></span></div>`:''}
   <button class="btn btn-primary" style="width:100%;padding:12px;font-size:14px" id="submitBooking" ${!f.room||!f.startTime||!f.endTime?'disabled':''}>Confirmar reserva</button>`;
@@ -311,11 +303,7 @@ function renderBookingsPanel(){
   let list=[...state.bookings].filter(b=>state.filter==='all'||b.room===state.filter).sort((a,b)=>(a.date+a.startTime).localeCompare(b.date+b.startTime));
   const hoy=hoyStr();
   const up=list.filter(b=>b.date>=hoy), past=list.filter(b=>b.date<hoy);
-
-  return `<div class="filter-bar">
-    ${filters.map(f=>`<button class="filter-btn${state.filter===f.id?' active':''}" data-filter="${f.id}">${f.label}</button>`).join('')}
-    <span style="margin-left:auto;font-size:12px;color:#aaa">${list.length} reserva${list.length!==1?'s':''}</span>
-  </div>
+  return `<div class="filter-bar">${filters.map(f=>`<button class="filter-btn${state.filter===f.id?' active':''}" data-filter="${f.id}">${f.label}</button>`).join('')}<span style="margin-left:auto;font-size:12px;color:#aaa">${list.length} reserva${list.length!==1?'s':''}</span></div>
   ${list.length===0?`<div class="empty-state"><div style="font-size:36px;margin-bottom:12px">📅</div>No hay reservas todavía</div>`:''}
   ${up.length>0?`<div class="section-label">Próximas y hoy</div><div class="booking-list" style="margin-bottom:1.75rem">${up.map(bkItem).join('')}</div>`:''}
   ${past.length>0?`<div class="section-label">Pasadas</div><div class="booking-list" style="opacity:.6">${past.map(bkItem).join('')}</div>`:''}`;
@@ -324,34 +312,14 @@ function renderBookingsPanel(){
 function bkItem(b){
   const r=ROOMS.find(x=>x.id===b.room);
   const canDel=b.userId===state.currentUser||isAdmin();
-  return `<div class="bk-item">
-    <span style="font-size:20px">${r?.icon||'📋'}</span>
-    <div class="bk-meta">
-      <div class="bk-name">${b.userName}</div>
-      <div class="bk-detail">${fmtD(b.date)} &nbsp;·&nbsp; ${b.startTime}–${b.endTime}</div>
-    </div>
-    <span class="badge ${r?.badge||''}">${r?.name||b.room}</span>
-    ${canDel?`<button class="del-btn" data-del="${b.id}" title="Cancelar reserva">✕</button>`:''}
-  </div>`;
+  return `<div class="bk-item"><span style="font-size:20px">${r?.icon||'📋'}</span><div class="bk-meta"><div class="bk-name">${b.userName}</div><div class="bk-detail">${fmtD(b.date)} &nbsp;·&nbsp; ${b.startTime}–${b.endTime}</div></div><span class="badge ${r?.badge||''}">${r?.name||b.room}</span>${canDel?`<button class="del-btn" data-del="${b.id}" title="Cancelar reserva">✕</button>`:''}</div>`;
 }
 
 function renderAdminPanel(){
   return `<div>
-  <div class="card">
-    <h3>Miembros invitados</h3>
-    <p style="font-size:13px;color:#888;margin-bottom:1rem">Aquí puedes añadir o eliminar personas. Cualquier miembro puede ser administrador — los administradores pueden gestionar reservas y usuarios.</p>
-    <div id="emailList">
-      ${state.allowedEmails.map(e=>`<div class="email-row">
-        <div><span style="color:#1a1a18">${e.name}</span> <span style="color:#aaa;font-size:12px">${e.email}</span></div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <select class="admin-role-select" data-role-email="${e.email}">
-            <option value="miembro"${e.role==='miembro'?' selected':''}>Miembro</option>
-            <option value="admin"${e.role==='admin'?' selected':''}>Admin</option>
-          </select>
-          ${e.email!==state.currentUser?`<button class="remove-btn" data-remove="${e.email}">Eliminar</button>`:'<span style="font-size:11px;color:#aaa">(tú)</span>'}
-        </div>
-      </div>`).join('')}
-    </div>
+  <div class="card"><h3>Miembros invitados</h3>
+    <p style="font-size:13px;color:#888;margin-bottom:1rem">Añade o elimina personas. Puedes cambiar el rol de cualquier miembro a administrador con el menú desplegable. Los cambios se guardan automáticamente.</p>
+    <div>${state.allowedEmails.map(e=>`<div class="email-row"><div><span style="color:#1a1a18">${e.name}</span> <span style="color:#aaa;font-size:12px">${e.email}</span></div><div style="display:flex;align-items:center;gap:8px"><select class="admin-role-select" data-role-email="${e.email}"><option value="miembro"${e.role==='miembro'?' selected':''}>Miembro</option><option value="admin"${e.role==='admin'?' selected':''}>Admin</option></select>${e.email!==state.currentUser?`<button class="remove-btn" data-remove="${e.email}">Eliminar</button>`:'<span style="font-size:11px;color:#aaa">(tú)</span>'}</div></div>`).join('')}</div>
     <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border)">
       <div class="section-label" style="margin-bottom:.75rem">Añadir nuevo miembro</div>
       <div class="form-row" style="margin-bottom:10px">
@@ -359,43 +327,33 @@ function renderAdminPanel(){
         <div class="form-group" style="margin-bottom:0"><label>Nombre completo</label><input id="nName" type="text" placeholder="Nombre y apellidos"/></div>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
-        <select id="nRole" class="admin-role-select" style="padding:8px 12px;font-size:13px">
-          <option value="miembro">Miembro</option>
-          <option value="admin">Admin</option>
-        </select>
+        <select id="nRole" class="admin-role-select" style="padding:8px 12px;font-size:13px"><option value="miembro">Miembro</option><option value="admin">Admin</option></select>
         <button class="btn btn-primary btn-sm" id="addMember">Añadir</button>
       </div>
+      <div id="addMsg" style="margin-top:.75rem;font-size:13px"></div>
     </div>
   </div>
-
-  <div class="card">
-    <h3>Gestión de reservas</h3>
-    ${state.bookings.length===0?'<p style="font-size:13px;color:#aaa">No hay reservas todavía.</p>':
-    `<div class="booking-list">${[...state.bookings].sort((a,b)=>(a.date+a.startTime).localeCompare(b.date+b.startTime)).map(bkItem).join('')}</div>`}
-  </div></div>`;
+  <div class="card"><h3>Gestión de reservas</h3>${state.bookings.length===0?'<p style="font-size:13px;color:#aaa">No hay reservas todavía.</p>':`<div class="booking-list">${[...state.bookings].sort((a,b)=>(a.date+a.startTime).localeCompare(b.date+b.startTime)).map(bkItem).join('')}</div>`}</div>
+  </div>`;
 }
 
 function renderGCalPanel(){
-  return `<div>
-  <div class="card">
-    <h3>Cómo conectar Google Calendar</h3>
-    <p style="font-size:13px;color:#888;margin-bottom:1.25rem">Sigue estos pasos para que las reservas aparezcan automáticamente en el calendario de Google del espacio.</p>
+  return `<div><div class="card"><h3>Cómo conectar Google Calendar</h3>
+    <p style="font-size:13px;color:#888;margin-bottom:1.25rem">Sigue estos pasos para que las reservas aparezcan en el calendario de Google del espacio.</p>
     <ol class="gcal-steps">
-      <li><div><strong>Crea un proyecto en Google Cloud</strong><br>Ve a <a href="https://console.cloud.google.com" style="color:var(--accent)">console.cloud.google.com</a>, haz clic en "Nuevo proyecto" y llámalo <code>ReservasFuengirola</code>.</div></li>
-      <li><div><strong>Activa la API de Google Calendar</strong><br>Dentro del proyecto ve a <em>APIs y servicios → Biblioteca</em>, busca <code>Google Calendar API</code> y haz clic en Activar.</div></li>
-      <li><div><strong>Crea credenciales OAuth 2.0</strong><br>Ve a <em>Credenciales → Crear credenciales → ID de cliente OAuth</em>. Elige <em>Aplicación web</em> y añade tu dominio de Vercel (p.ej. <code>reservas-fuengirola.vercel.app</code>).</div></li>
-      <li><div><strong>Comparte tu calendario con la app</strong><br>En Google Calendar abre la <em>Configuración del calendario → Compartir con personas</em> y añade el correo de la cuenta de servicio con permiso para <em>Realizar cambios en eventos</em>.</div></li>
-      <li><div><strong>Copia el ID del calendario</strong><br>En la misma configuración encontrarás el <em>ID del calendario</em>, con este aspecto: <code>abc123@group.calendar.google.com</code>. Cópialo.</div></li>
-      <li><div><strong>Pégalo aquí abajo</strong><br>Introduce el ID en el campo de abajo y guárdalo. Luego pídele al desarrollador que conecte la librería <code>gapi</code> en el código para que las reservas se sincronicen.</div></li>
-      <li><div><strong>Formato de los eventos</strong><br>Cada reserva creará un evento con el título <code>[Sala] – Nombre del usuario</code>, en la fecha y hora exactas, con el correo del usuario como asistente.</div></li>
+      <li><div><strong>Crea un proyecto en Google Cloud</strong><br>Ve a <a href="https://console.cloud.google.com" style="color:var(--accent)">console.cloud.google.com</a> y crea un nuevo proyecto.</div></li>
+      <li><div><strong>Activa la API de Google Calendar</strong><br>Ve a <em>APIs y servicios → Biblioteca</em>, busca <code>Google Calendar API</code> y actívala.</div></li>
+      <li><div><strong>Crea credenciales OAuth 2.0</strong><br>Ve a <em>Credenciales → Crear credenciales → ID de cliente OAuth</em> y añade tu dominio de Vercel.</div></li>
+      <li><div><strong>Comparte tu calendario</strong><br>En Google Calendar abre <em>Configuración → Compartir con personas</em> y añade permiso para realizar cambios en eventos.</div></li>
+      <li><div><strong>Copia el ID del calendario</strong><br>En la configuración del calendario encontrarás el <em>ID del calendario</em>: <code>abc123@group.calendar.google.com</code>.</div></li>
+      <li><div><strong>Pégalo aquí abajo y guárdalo</strong></div></li>
     </ol>
   </div>
-  <div class="card">
-    <h3>ID de tu Google Calendar</h3>
-    <p style="font-size:13px;color:#888;margin-bottom:1rem">Una vez tengas el ID, pégalo aquí para tenerlo guardado y listo para la integración.</p>
+  <div class="card"><h3>ID de tu Google Calendar</h3>
+    <p style="font-size:13px;color:#888;margin-bottom:1rem">Una vez tengas el ID, pégalo aquí.</p>
     <div class="form-group"><label>ID del calendario</label><input id="calIdInput" type="text" placeholder="tu-calendario@group.calendar.google.com" value="${state.calendarId}"/></div>
     <button class="btn btn-primary btn-sm" id="saveCalId">Guardar</button>
-    ${state.calIdSaved?`<div class="alert success" style="margin-top:1rem"><span class="alert-icon">✓</span><span>ID guardado. Cuando conectes la API de Google, las reservas se sincronizarán automáticamente.</span></div>`:''}
+    ${state.calIdSaved?`<div class="alert success" style="margin-top:1rem"><span class="alert-icon">✓</span><span>ID guardado correctamente.</span></div>`:''}
   </div></div>`;
 }
 
@@ -414,43 +372,54 @@ function bindApp(){
   document.querySelectorAll('[data-end]').forEach(s=>s.onclick=()=>{ if(s.classList.contains('taken')) return; state.form.endTime=s.dataset.end; state.conflict=null; state.bookingSuccess=false; render(); });
 
   const sub=document.getElementById('submitBooking');
-  if(sub) sub.onclick=()=>{
+  if(sub) sub.onclick=async()=>{
     const f=state.form;
     const clash=checkConflict(f.room,f.date,f.startTime,f.endTime);
     if(clash){ state.conflict=clash; state.bookingSuccess=false; render(); return; }
-    state.bookings.push({id:Date.now(), userId:state.currentUser, userName:state.currentUserName, room:f.room, date:f.date, startTime:f.startTime, endTime:f.endTime});
-    state.form={room:'',date:hoyStr(),startTime:'',endTime:''}; state.conflict=null; state.bookingSuccess=true; render();
+    try {
+      await addDoc(collection(db,'bookings'),{userId:state.currentUser,userName:state.currentUserName,room:f.room,date:f.date,startTime:f.startTime,endTime:f.endTime,createdAt:new Date().toISOString()});
+      state.form={room:'',date:hoyStr(),startTime:'',endTime:''}; state.conflict=null; state.bookingSuccess=true; render();
+    } catch(e){ alert('Error al guardar la reserva. Inténtalo de nuevo.'); }
   };
 
   document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{ state.filter=b.dataset.filter; render(); });
-  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
-    if(confirm('¿Cancelar esta reserva?')){ state.bookings=state.bookings.filter(bk=>bk.id!=b.dataset.del); render(); }
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{
+    if(confirm('¿Cancelar esta reserva?')){
+      try { await deleteDoc(doc(db,'bookings',b.dataset.del)); } catch(e){ alert('Error al cancelar la reserva.'); }
+    }
   });
 
-  document.querySelectorAll('[data-role-email]').forEach(sel=>sel.onchange=()=>{
-    const entry=state.allowedEmails.find(e=>e.email===sel.dataset.roleEmail);
-    if(entry) entry.role=sel.value; render();
+  document.querySelectorAll('[data-role-email]').forEach(sel=>sel.onchange=async()=>{
+    try { await setDoc(doc(db,'users',sel.dataset.roleEmail),{role:sel.value},{merge:true}); } catch(e){ alert('Error al cambiar el rol.'); }
   });
 
   const addM=document.getElementById('addMember');
-  if(addM) addM.onclick=()=>{
+  if(addM) addM.onclick=async()=>{
     const email=document.getElementById('nEmail')?.value.trim().toLowerCase();
     const name=document.getElementById('nName')?.value.trim();
     const role=document.getElementById('nRole')?.value||'miembro';
-    if(!email||!name){ alert('Por favor rellena el correo y el nombre.'); return; }
-    if(state.allowedEmails.find(x=>x.email===email)){ alert('Este correo ya está en la lista.'); return; }
-    state.allowedEmails.push({email,name,role}); render();
+    const msg=document.getElementById('addMsg');
+    if(!email||!name){ if(msg){msg.style.color='#c0392b';msg.textContent='Por favor rellena el correo y el nombre.';} return; }
+    if(state.allowedEmails.find(x=>x.email===email)){ if(msg){msg.style.color='#c0392b';msg.textContent='Este correo ya está en la lista.';} return; }
+    try {
+      await setDoc(doc(db,'users',email),{email,name,role});
+      document.getElementById('nEmail').value=''; document.getElementById('nName').value='';
+      if(msg){msg.style.color='#1a5c3a';msg.textContent=`✓ ${name} añadido correctamente.`;}
+      setTimeout(()=>{ if(msg) msg.textContent=''; },3000);
+    } catch(e){ if(msg){msg.style.color='#c0392b';msg.textContent='Error al añadir el miembro.';} }
   };
 
-  document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{
-    if(confirm(`¿Eliminar a ${b.dataset.remove} de la lista de invitados?`)){ state.allowedEmails=state.allowedEmails.filter(e=>e.email!==b.dataset.remove); render(); }
+  document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=async()=>{
+    if(confirm(`¿Eliminar a ${b.dataset.remove} de la lista de invitados?`)){
+      try { await deleteDoc(doc(db,'users',b.dataset.remove)); } catch(e){ alert('Error al eliminar el miembro.'); }
+    }
   });
 
   const sc=document.getElementById('saveCalId');
   if(sc) sc.onclick=()=>{ state.calendarId=document.getElementById('calIdInput').value; state.calIdSaved=true; render(); };
 }
 
-render();
+loadData();
 </script>
 </body>
 </html>
