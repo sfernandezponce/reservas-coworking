@@ -128,7 +128,7 @@ code{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padd
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { getAuth, signInWithPopup, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZnWIp-PlCY_Ui2xcz6FSZp6SoOUofWDw",
@@ -238,14 +238,6 @@ let state = {
   newHoliday:'', newHolidayLabel:'', holidayMsg:''
 };
 
-// Handle redirect result on page load
-getRedirectResult(auth).then(result=>{
-  if(result){
-    const credential=GoogleAuthProvider.credentialFromResult(result);
-    if(credential?.accessToken) state._googleAccessToken=credential.accessToken;
-  }
-}).catch(e=>console.warn('Redirect result error:',e));
-
 onAuthStateChanged(auth, async(user)=>{
   if(user){
     state.authUser=user;
@@ -343,8 +335,10 @@ function bindLogin(){
   document.getElementById('googleLoginBtn').onclick=async()=>{
     try {
       state.loginError='';
-      await signInWithRedirect(auth, provider);
-    } catch(e){ state.loginError='Error al iniciar sesión. Inténtalo de nuevo.'; render(); }
+      const result=await signInWithPopup(auth,provider);
+      const credential=GoogleAuthProvider.credentialFromResult(result);
+      if(credential?.accessToken) state._googleAccessToken=credential.accessToken;
+    } catch(e){ if(e.code!=='auth/popup-closed-by-user'){ state.loginError='Error al iniciar sesión. Inténtalo de nuevo.'; render(); } }
   };
 }
 
