@@ -589,7 +589,12 @@ function bindApp(){
   document.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{
     const bk=state.bookings.find(x=>x.id===b.dataset.del);
     if(!bk||!canDelete(bk)){ alert('Solo puedes cancelar tus propias reservas.'); return; }
-    if(confirm('¿Cancelar esta reserva?')){ try { await deleteDoc(doc(db,'bookings',b.dataset.del)); } catch(e){ alert('Error al cancelar.'); } }
+    if(confirm('¿Cancelar esta reserva?')){
+      try {
+        await deleteDoc(doc(db,'bookings',b.dataset.del));
+        if(bk.calEventId){ try{ await deleteCalendarEvent(bk.calEventId); }catch(ce){ console.warn('Error al borrar evento de calendario:',ce); } }
+      } catch(e){ alert('Error al cancelar.'); }
+    }
   });
 
   document.querySelectorAll('[data-role-email]').forEach(sel=>sel.onchange=async()=>{
