@@ -143,7 +143,7 @@ const CALENDAR_ID = "99b040e81c4ab4dc0b7404bc57893d74abd98c6694b2ee2fa7f45953627
 // Google Calendar via REST API using Google Identity Services token client
 const GCAL_CLIENT_ID = "341656478236-70ja77ung1a7q5ahhnja4m96a0bsg6mr.apps.googleusercontent.com";
 const GCAL_SCOPES = "https://www.googleapis.com/auth/calendar.events";
-let _tokenClient=null, _calToken=null;
+let _tokenClient=null, _calToken=null, _calTokenExpiry=0;
 
 function initTokenClient(){
   if(_tokenClient) return;
@@ -155,28 +155,40 @@ function initTokenClient(){
   });
 }
 
-function getCalToken(){
+function getCalToken(forceConsent){
   return new Promise((resolve,reject)=>{
-    initTokenClient();
-    if(!_tokenClient){reject(new Error('Token client not ready'));return;}
-    _tokenClient.callback=(resp)=>{
-      if(resp.error){reject(resp);return;}
-      _calToken=resp.access_token;
-      resolve(_calToken);
-    };
-    _tokenClient.requestAccessToken({prompt:_calToken?'':'consent'});
+    // Retry up to 3 times waiting for GIS script to load
+    let attempts=0;
+    function tryInit(){
+      initTokenClient();
+      if(!_tokenClient){
+        if(attempts++<10){ setTimeout(tryInit,300); return; }
+        reject(new Error('Google Identity Services no cargado')); return;
+      }
+      _tokenClient.callback=(resp)=>{
+        if(resp.error){reject(new Error('Error de autorización: '+resp.error));return;}
+        _calToken=resp.access_token;
+        _calTokenExpiry=Date.now()+(resp.expires_in||3500)*1000-30000;
+        resolve(_calToken);
+      };
+      // Always use prompt:'consent' for delete operations so user sees the popup clearly
+      const prompt=forceConsent?'consent':(_calToken&&Date.now()<_calTokenExpiry?'none':'consent');
+      _tokenClient.requestAccessToken({prompt});
+    }
+    tryInit();
   });
 }
 
 async function calFetch(url, method, body){
-  let token=_calToken;
-  if(!token) token=await getCalToken();
-  const opts={method,headers:{'Authorization':`Bearer ${token}`}};
-  if(body){opts.headers['Content-Type']='application/json';opts.body=JSON.stringify(body);}
+  // Always get a fresh token for DELETE to avoid silent failures
+  const needFresh=(method==='DELETE')||!_calToken||Date.now()>=_calTokenExpiry;
+  let token=needFresh ? await getCalToken(false) : _calToken;
+  const opts={method,headers:{'Authorization':`Bearer ${token}`,'Content-Type':'application/json'}};
+  if(body) opts.body=JSON.stringify(body);
   const resp=await fetch(url,opts);
   if(resp.status===401){
-    _calToken=null;
-    token=await getCalToken();
+    _calToken=null; _calTokenExpiry=0;
+    token=await getCalToken(true);
     opts.headers['Authorization']=`Bearer ${token}`;
     return fetch(url,opts);
   }
@@ -205,11 +217,12 @@ async function createCalendarEvent(booking){
 }
 
 async function deleteCalendarEvent(calEventId){
-  if(!calEventId) return;
-  try {
-    const resp=await calFetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events/${calEventId}`,'DELETE');
-    if(!resp.ok&&resp.status!==404&&resp.status!==410) console.warn('Calendar delete error:',resp.status);
-  } catch(e){console.warn('deleteCalendarEvent error:',e);}
+  if(!calEventId) return true;
+  const resp=await calFetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events/${calEventId}`,'DELETE');
+  if(!resp.ok&&resp.status!==404&&resp.status!==410){
+    throw new Error('Error al borrar en Google Calendar: '+resp.status);
+  }
+  return true;
 }
 
 // Load Google Identity Services script
@@ -589,11 +602,22 @@ function bindApp(){
   document.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{
     const bk=state.bookings.find(x=>x.id===b.dataset.del);
     if(!bk||!canDelete(bk)){ alert('Solo puedes cancelar tus propias reservas.'); return; }
-    if(confirm('¿Cancelar esta reserva?')){
-      try {
-        await deleteDoc(doc(db,'bookings',b.dataset.del));
-        if(bk.calEventId){ try{ await deleteCalendarEvent(bk.calEventId); }catch(ce){ console.warn('Error al borrar evento de calendario:',ce); } }
-      } catch(e){ alert('Error al cancelar.'); }
+    if(!confirm('¿Cancelar esta reserva?')) return;
+    b.disabled=true;
+    try {
+      if(bk.calEventId){
+        try {
+          await deleteCalendarEvent(bk.calEventId);
+        } catch(calErr){
+          console.warn('Google Calendar delete failed:',calErr);
+          const continuar=confirm('No se pudo borrar el evento de Google Calendar (puede que necesites dar permiso en la ventana emergente).\n¿Quieres cancelar la reserva igualmente?\nSi dices que sí, tendrás que borrar el evento de Google Calendar manualmente.');
+          if(!continuar){ b.disabled=false; return; }
+        }
+      }
+      await deleteDoc(doc(db,'bookings',b.dataset.del));
+    } catch(e){
+      alert('Error al cancelar la reserva: '+e.message);
+      b.disabled=false;
     }
   });
 
